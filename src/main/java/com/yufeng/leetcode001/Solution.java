@@ -26,5 +26,7 @@ public class Solution {
 
         Solution s = new Solution();
         s.twoSum(new int[] {2, 7, 11, 5}, 9);
+
+        System.out.println(882 % 10);
     }
 }
