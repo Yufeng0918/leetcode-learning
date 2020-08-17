@@ -1,6 +1,5 @@
 package com.yufeng.leetcode002;
 
-import java.math.BigDecimal;
 
 public class Solution {
 
@@ -86,6 +85,7 @@ public class Solution {
 
         Solution solution = new Solution();
         System.out.println(solution.addTwoNumbers(lhead, rhead));
+
     }
 
 }

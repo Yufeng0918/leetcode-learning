@@ -8,18 +8,20 @@ public class SolutionTest {
 
     private static  Solution solution;
 
-    @BeforeClass
-    public static void init(){
-        solution = new Solution();
-    }
+//    @BeforeClass
+//    public static void init(){
+//        solution = new Solution();
+//    }
 
     @Test
     public void testArray1() {
 
-        int target = 9;
-        int[] nums = {2, 7, 11, 15};
-        int[] arrays = solution.twoSum(nums, target);
-        Assert.assertEquals(target, nums[arrays[0]] + nums[arrays[1]]);
+        boolean b = true;
+        int a = 4;
+
+        while(a!=4) ++a;
+
+        System.out.println(a);
     }
 
 }
