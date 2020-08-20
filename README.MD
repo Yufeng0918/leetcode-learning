@@ -11,3 +11,6 @@
 
 
 ## [3. 栈/队列](./doc/stack-queue.md)
+
+
+## [4. 哈希](./doc/map-set.md)
