@@ -2,7 +2,7 @@
 
 
 
-## [1. Big(O)分析](./doc/big-o.md)
+## [1. Big(O)](./doc/big-o.md)
 
 
 
