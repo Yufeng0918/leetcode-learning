@@ -2,7 +2,7 @@
 
 | 序号 | 题目                           | 连接                                                         | 次数 |
 | ---- | ------------------------------ | ------------------------------------------------------------ | ---- |
-| 70   | 爬楼梯                         | https://leetcode-cn.com/problems/climbing-stairs/            | 1    |
+| 70   | 爬楼梯                         | https://leetcode-cn.com/problems/climbing-stairs/            | 2    |
 | 22   | 括号生成                       | https://leetcode-cn.com/problems/generate-parentheses/       | 2    |
 | 226  | 翻转二叉树                     | https://leetcode-cn.com/problems/invert-binary-tree/description/ | 2    |
 | 96   | 验证二叉搜索树                 | https://leetcode-cn.com/problems/validate-binary-search-tree/ | 1    |
@@ -29,17 +29,58 @@
 ```JAVA
 private static int divide_conquer(Problem problem, ) {
   
+  // terminator
   if (problem == NULL) {
     int res = process_last_result();
     return res;     
   }
+  
+  //split to sub problem
   subProblems = split_problem(problem)
   
+  // pass sub problem  
   res0 = divide_conquer(subProblems[0])
   res1 = divide_conquer(subProblems[1])
   
+  // merge sub problem result or additional processing  
   result = process_result(res0, res1);
   return result;
+}
+```
+
+
+
+## 括号生产
+
+树形分叉递归，**最终结果在树的叶子节点**
+
+**终止条件**：当左括号和右括号都使用完
+
+**分叉条件**
+
++ 左括号还有剩余
+
++ 右括号个数小于左括号
+
+```JAVA
+class Solution {
+    public List<String> generateParenthesis(int n) {
+
+        List<String> result = new LinkedList<>();
+        if (n == 0) return result;
+
+        generate(0, 0, n, "", result);
+        return result;
+    }
+
+    public void generate(int left, int right, int limit, String curr, List<String> result) {
+        // 终结条件
+        if (left == limit && right == limit) result.add(curr);
+
+        // 分支开叉向下
+        if (left < limit) generate(left + 1, right, limit, curr + "(", result);
+        if (right < left && right < limit) generate(left, right + 1, limit, curr + ")", result);
+    }
 }
 ```
 
