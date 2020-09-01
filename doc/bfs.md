@@ -9,8 +9,8 @@
 | 515  | 在每个树行中找最大值 | https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/#/description | 1    |
 | 127  | 单词接龙             | https://leetcode-cn.com/problems/word-ladder/description/    | 1    |
 | 126  | 单词接龙 II          | https://leetcode-cn.com/problems/word-ladder-ii/description/ | 1    |
-| 200  | 岛屿数量             | https://leetcode-cn.com/problems/number-of-islands/          | 0    |
-| 529  | 扫雷游戏             | https://leetcode-cn.com/problems/minesweeper/description/    | 0    |
+| 200  | 岛屿数量             | https://leetcode-cn.com/problems/number-of-islands/          | 1    |
+| 529  | 扫雷游戏             | https://leetcode-cn.com/problems/minesweeper/description/    | 1    |
 
 
 
