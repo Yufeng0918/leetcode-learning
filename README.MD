@@ -31,3 +31,7 @@
 
 
 ## [8. 贪心算法](./doc/greedy.md)
+
+
+
+## [9. 搜索](./doc/search.md)
