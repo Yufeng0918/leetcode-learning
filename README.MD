@@ -43,3 +43,5 @@
 
 
 ## [11. 并查集](./doc/dp.md)
+
+![](./images/leetcode-00.jpg)
