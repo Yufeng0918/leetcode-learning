@@ -1,4 +1,4 @@
-# 广度优先搜索
+# 深度/广度优先搜索
 
 
 
@@ -13,8 +13,37 @@
 | 529  | 扫雷游戏             | https://leetcode-cn.com/problems/minesweeper/description/    | 1    |
 
 
+## 深度优先搜索
 
-## 代码模板
+### 代码模板
+
+根据当前节点状态，更新状态，然后继续往下查询
+
+```python
+visited = set() 
+
+def dfs(node, visited):
+    if node in visited: # terminator
+    	# already visited 
+    	return 
+    
+	visited.add(node) 
+
+	# process current node here. 
+	for next_node in node.children(): 
+		if next_node not in visited: 
+			dfs(next_node, visited)
+```
+
+
+
+
+
+
+
+## 广度优先搜索
+
+### 代码模板
 
 第一次先把第一个元素放入队列
 
@@ -22,43 +51,18 @@
 
 终止条件是队列中不再有其他元素
 
-```JAVA
-public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+```python
+def BFS(root):
+    visited = set()
+	queue = [] 
+	queue.append([root]) 
 
-    TreeNode(int x) {
-        val = x;
-    }
-}
+	while queue: 
+		node = queue.pop() 
+		visited.add(node)
 
-public List<List<Integer>> levelOrder(TreeNode root) {
-    List<List<Integer>> allResults = new ArrayList<>();
-    if (root == null) {
-        return allResults;
-    }
-    Queue<TreeNode> nodes = new LinkedList<>();
-    nodes.add(root);
-    while (!nodes.isEmpty()) {
-      
-        // save current queue size
-        int size = nodes.size();
-        List<Integer> results = new ArrayList<>();
-        // fetch all item in current level
-        for (int i = 0; i < size; i++) {
-            TreeNode node = nodes.poll();
-            results.add(node.val);
-            if (node.left != null) {
-                nodes.add(node.left);
-            }
-            if (node.right != null) {
-                nodes.add(node.right);
-            }
-        }
-        allResults.add(results);
-    }
-    return allResults;
-}
+		# process(node) 
+		nodes = generate_related_nodes(node) 
+		queue.push(nodes)
 ```
 
