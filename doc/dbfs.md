@@ -9,7 +9,7 @@
 | 126  | 单词接龙 II                                          | https://leetcode-cn.com/problems/word-ladder-ii/description/ | 1    |
 | 200  | 岛屿数量                                             | https://leetcode-cn.com/problems/number-of-islands/          | 1    |
 | 529  | 扫雷游戏                                             | https://leetcode-cn.com/problems/minesweeper/description/    | 1    |
-| 51   | [N 皇后](https://leetcode-cn.com/problems/n-queens/) |                                                              | 1    |
+| 51   | [N 皇后](https://leetcode-cn.com/problems/n-queens/) |                                                              | 2    |
 |      |                                                      |                                                              |      |
 |      |                                                      |                                                              |      |
 |      |                                                      |                                                              |      |
