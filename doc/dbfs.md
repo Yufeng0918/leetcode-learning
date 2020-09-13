@@ -1,21 +1,21 @@
 # 深度/广度优先搜索
 
-| 序号 | 题目                                                 | 连接                                                         | 次数 |
-| ---- | ---------------------------------------------------- | ------------------------------------------------------------ | ---- |
-| 102  | 二叉树的层序遍历                                     | https://leetcode-cn.com/problems/binary-tree-level-order-traversal/#/description | 1    |
+| 序号 | 题目                                                         | 连接                                                         | 次数 |
+| ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
+| 102  | 二叉树的层序遍历                                             | https://leetcode-cn.com/problems/binary-tree-level-order-traversal/#/description | 1    |
 | 433  | [最小基因变化](https://leetcode-cn.com/problems/minimum-genetic-mutation/) |                                                              | 1    |
 | 515  | 在每个树行中找最大值                                         | https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/#/description | 1    |
 | 127  | [单词接龙](https://leetcode-cn.com/problems/word-ladder/)    |                                                              | 1    |
-| 126  | 单词接龙 II                                          | https://leetcode-cn.com/problems/word-ladder-ii/description/ | 1    |
-| 200  | 岛屿数量                                             | https://leetcode-cn.com/problems/number-of-islands/          | 1    |
-| 529  | 扫雷游戏                                             | https://leetcode-cn.com/problems/minesweeper/description/    | 1    |
-| 51   | [N 皇后](https://leetcode-cn.com/problems/n-queens/) |                                                              | 2    |
+| 126  | 单词接龙 II                                                  | https://leetcode-cn.com/problems/word-ladder-ii/description/ | 1    |
+| 200  | 岛屿数量                                                     | https://leetcode-cn.com/problems/number-of-islands/          | 1    |
+| 529  | 扫雷游戏                                                     | https://leetcode-cn.com/problems/minesweeper/description/    | 1    |
+| 51   | [N 皇后](https://leetcode-cn.com/problems/n-queens/)         |                                                              | 2    |
 | 36   | [有效的数独](https://leetcode-cn.com/problems/valid-sudoku/) |                                                              | 2    |
 | 37   | [解数独](https://leetcode-cn.com/problems/sudoku-solver/)    |                                                              | 2    |
-|      |                                                      |                                                              |      |
-|      |                                                      |                                                              |      |
-|      |                                                      |                                                              |      |
-|      |                                                      |                                                              |      |
+| 1091 | [二进制矩阵中的最短路径](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/) |                                                              |      |
+|      |                                                              |                                                              |      |
+|      |                                                              |                                                              |      |
+|      |                                                              |                                                              |      |
 
 
 
@@ -53,8 +53,6 @@ def dfs(node, visited):
 
 
 
-
-
 ## 广度优先搜索 BFS
 
 ### 概述
@@ -67,22 +65,96 @@ Breadth-First-Search就是一种“地毯式”**层层推进的搜索策略**�
 
 ### 实现
 
+#### 单向搜索
+
 + 第一次先把第一个元素放入队列
 + 在每次循环清空队列时，**先保存当前队列的个数，这个就是每层的个数**
 + 终止条件是队列中不再有其他元素
 
-```python
-def BFS(root):
-    visited = set()
-	queue = [] 
-	queue.append([root]) 
+```java
+int BFS(Node start, Node target) {
+    Queue<Node> q; // 核心数据结构
+    Set<Node> visited; // 避免走回头路
+    
+    q.offer(start); // 将起点加入队列
+    visited.add(start);
+    int step = 0; // 记录扩散的步数
 
-	while queue: 
-		node = queue.pop() 
-		visited.add(node)
-
-		# process(node) 
-		nodes = generate_related_nodes(node) 
-		queue.push(nodes)
+    while (q not empty) {
+        int sz = q.size();
+        /* 将当前队列中的所有节点向四周扩散 */
+        for (int i = 0; i < sz; i++) {
+            Node cur = q.poll();
+            /* 划重点：这里判断是否到达终点 */
+            if (cur.equals(target))
+                return step;
+            /* 将 cur 的相邻节点加入队列 */
+            for (Node x : cur.adj())
+                if (!visited.contains(x)) {
+                    q.offer(x);
+                    visited.add(x);
+                }
+        }
+        /* 划重点：更新步数在这里 */
+        step++;
+    }
+}
 ```
+
+
+
+#### 双向搜索
+
++ 必须知道起点和终点
++ 同时从起点和终点扩散，从较小的集合扩散
+
+```java
+public int doubleBFS(Node beginNode, Node endNode) {
+
+  // 初始化起点合集
+	Set<Node> start = new HashSet<>();
+  start.add(beginNode);
+  
+  // 初始化终点合集
+  Set<Node> end = new HashSet<>();
+  end.add(endNode);
+
+  // 初始化访问合集
+  Set<Node> visited = new HashSet<>();
+  visited.add(beginNode);
+  visited.add(endNode);
+
+ 	int step = 1;
+ 	while(start.size() != 0 && end.size() != 0) {
+
+    Set<Node> temp = new HashSet<>();
+    // 遍历所有起点集合节点
+    for(Node node1: start) {
+    		
+      	// 查看每个节点里面的周围节点
+      	for (Node node2: node1.adj()) {
+        		/*重点： 如果周围节点有终止结合， 那么停止循环，说明两个结合相邻*/
+            if (end.contains(node2)) return step + 1;
+          	
+            /*重点：如果没有，则加入零时集合和已访问集合*/
+            temp.add(node2);
+          	visited.add(node2);
+        }
+    }
+
+    step++;
+    
+    /*重点：把零时集合赋值给起始集合并查看是否需要交换*/
+    start = temp;
+    if (start.size() > end.size()) {
+    	temp = start;
+    	start = end;
+    	end = temp;
+    }
+  }
+  return -1;
+}
+```
+
+
 
