@@ -44,4 +44,8 @@
 
 ## [11. 并查集](./doc/dp.md)
 
+
+
+## [12. 位运算](./doc/bit.md)
+
 ![](./images/leetcode-00.jpg)

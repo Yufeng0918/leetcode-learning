@@ -6,7 +6,7 @@
 | 231  | [2的幂](https://leetcode-cn.com/problems/power-of-two/)      | 1    |
 | 190  | [颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/) | 1    |
 | 338  | [比特位计数](https://leetcode-cn.com/problems/counting-bits/) | 1    |
-| 51   | [N 皇后](https://leetcode-cn.com/problems/n-queens/)         |      |
+| 51   | [N 皇后](https://leetcode-cn.com/problems/n-queens/)         | 1     |
 | 52   | [N皇后 II](https://leetcode-cn.com/problems/n-queens-ii/)    |      |
 
 

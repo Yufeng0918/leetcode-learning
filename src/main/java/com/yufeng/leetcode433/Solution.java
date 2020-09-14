@@ -27,5 +27,9 @@ public class Solution {
 //        System.out.println(8 & (1 << (4 - 1)));
 
         System.out.println(16 & (15));
+        System.out.println(12 & (-12));
+        //01100
+        //10011 -> 10100
+        //00100
     }
 }
