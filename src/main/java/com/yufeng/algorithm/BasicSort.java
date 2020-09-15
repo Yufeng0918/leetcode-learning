@@ -1,13 +1,21 @@
 package com.yufeng.algorithm;
 
+import java.util.Collections;
+
 public class BasicSort {
 
 
     public static void main(String[] args) {
 
         int[] arr = new int[] {3, 1, 9, 10, 99, 20, 7};
-//        selectionSort(arr);
-//        insertionSort(arr);
+        selectionSort(arr);
+        printArr(arr);
+
+        arr = new int[] {3, 1, 9, 10, 99, 20, 7};
+        insertionSort(arr);
+        printArr(arr);
+
+        arr = new int[] {3, 1, 9, 10, 99, 20, 7};
         bubbleSort(arr);
         printArr(arr);
     }
@@ -29,17 +37,16 @@ public class BasicSort {
 
     public static void insertionSort(int[] arr) {
 
-        for(int i = 1; i < arr.length; i++) {
+       for(int i = 1; i < arr.length; i++) {
 
-            int key = arr[i];
-            int j = i - 1;
-
-            while (j >= 0 && key < arr[j]) {
-                arr[j + 1] = arr[j];
-                j--;
-            }
-            arr[j + 1] = key;
-        }
+           int temp = arr[i];
+           int j = i - 1;
+           while (j >= 0 && temp < arr[j] ) {
+               arr[j + 1] = arr[j];
+               j--;
+           }
+           arr[j + 1] = temp;
+       }
     }
 
     public static void bubbleSort(int[] arr) {
