@@ -5,7 +5,7 @@
 | 11   | 盛最多水的容器         | https://leetcode-cn.com/problems/container-with-most-water/  | 3    |
 | 15   | 三数之和               | https://leetcode-cn.com/problems/3sum/                       | 3    |
 | 283  | 移动零                 | https://leetcode-cn.com/problems/move-zeroes/                | 3    |
-| 206  | 反转链表               | https://leetcode-cn.com/problems/reverse-linked-list/        | 2    |
+| 206  | 反转链表               | https://leetcode-cn.com/problems/reverse-linked-list/        | 3    |
 | 141  | 环形链表               | https://leetcode-cn.com/problems/linked-list-cycle           | 2    |
 | 24   | 两两交换链表中的节点   | https://leetcode-cn.com/problems/swap-nodes-in-pairs/        | 2    |
 | 142  | 环形链表 II            | https://leetcode-cn.com/problems/linked-list-cycle-ii/       | 2    |
