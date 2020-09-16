@@ -18,7 +18,7 @@
 
 
 
-## [5. 树](./doc/tree.md), [字典树](./doc/trie-tree.md)
+## [5. 树](./doc/tree.md)/[字典树](./doc/trie-tree.md)
 
 
 
