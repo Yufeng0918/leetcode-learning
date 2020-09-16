@@ -48,4 +48,8 @@
 
 ## [12. 位运算](./doc/bit.md)
 
+
+
+## [13. 排序](./doc/sort.md)
+
 ![](./images/leetcode-00.jpg)
