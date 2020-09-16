@@ -2,8 +2,11 @@
 
 | 序号 | 题目次数                                                     | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 94   | [实现 Trie (前缀树)](https://leetcode-cn.com/problems/implement-trie-prefix-tree/) | 1    |
-| 212  | [单词搜索 II](https://leetcode-cn.com/problems/word-search-ii/) | 1    |
+| 1122 | [数组的相对排序](https://leetcode-cn.com/problems/relative-sort-array/) | 1    |
+| 242  | [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/) | 2    |
+| 56   | [合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 1    |
+| 1244 | [力扣排行榜](https://leetcode-cn.com/problems/design-a-leaderboard/) | 1    |
+| 493  | [ 翻转对](https://leetcode-cn.com/problems/reverse-pairs/)   |      |
 |      |                                                              |      |
 |      |                                                              |      |
 
@@ -49,6 +52,22 @@
 
 ![](../images/leetcode-15.jpg)
 
+```JAVA
+    public static void bubbleSort(int[] arr) {
+        for(int i = 0; i < arr.length; i++) {
+            for(int j = 0; j < arr.length - i -1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+```
+
+
+
 
 
 ### 插入排序
@@ -56,6 +75,24 @@
 将数组中的数据分为两个区间，**已排序区间和未排序区间**。插入算法的核心思想是取未排序区间中的元素，在已排序区间中找到合适的插入位置将其插入，并保证已排序区间数据一直有序。
 
 ![](../images/leetcode-17.jpg)
+
+```JAVA
+    public static void insertionSort(int[] arr) {
+
+       for(int i = 1; i < arr.length; i++) {
+
+           int temp = arr[i];
+           int j = i - 1;
+           while (j >= 0 && temp < arr[j] ) {
+               arr[j + 1] = arr[j];
+               j--;
+           }
+           arr[j + 1] = temp;
+       }
+    }
+```
+
+
 
 
 
@@ -65,3 +102,105 @@
 
 ![](../images/leetcode-18.jpg)
 
+```JAVA
+    public static void selectionSort(int[] arr) {
+        for(int i = 0; i < arr.length; i++) {
+
+            int minIdx = i;
+            for(int j = i; j < arr.length; j++) {
+                if (arr[j] < arr[minIdx]) minIdx = j;
+            }
+            int temp = arr[i];
+            arr[i] = arr[minIdx];
+            arr[minIdx] = temp;
+        }
+    }
+```
+
+
+
+## 高级排序
+
+### 归并排序
+
+先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起。归并排序使用的就是**分治思想**。
+
+非原地，稳定排序，时间复杂度是 O(nlogn)
+
+![](../images/leetcode-19.jpg)
+
+```Java
+    private static void mergeSort(int[] arr, int l, int r) {
+
+        if (l >= r) {
+            return;
+        }
+
+        int mid = l + ((r - l) >> 1);
+        mergeSort(arr, l, mid);
+        mergeSort(arr, mid + 1, r);
+
+        int i = l;
+        int j = mid + 1;
+        int k = 0;
+        int[] temp = new int[r - l + 1];
+        while (i <= mid && j <= r) {
+            temp[k++] = arr[i] < arr[j] ? arr[i++] : arr[j++];
+        }
+
+        while (i <= mid) temp[k++] = arr[i++];
+        while (j <= r) temp[k++] = arr[j++];
+
+        for(int q = 0, p = l; q < temp.length; q++, p++) {
+            arr[p] = temp[q];
+        }
+    }
+```
+
+
+
+### 快速排序
+
+排序数组中下标从 p 到 r 之间的一组数据，选择 p 到 r 之间的任意一个数据作为 pivot（分区点）。我们遍历 p 到 r 之间的数据，将小于 pivot 的放到左边，将大于 pivot 的放到右边，将 pivot 放到中间
+
+快排是一种原地、不稳定的排序算法。
+
+![](../images/leetcode-20.jpg)
+
+```Java
+    private static  void quickSort(int[] arr, int l, int r) {
+
+        if (l >= r)
+            return;
+
+        int pivot = arr[r];
+        int idx = l;
+        int temp;
+        for(int i = l; i <= r ; i++) {
+            if (arr[i] < pivot) {
+                temp = arr[idx];
+                arr[idx++] = arr[i];
+                arr[i] = temp;
+            }
+        }
+      
+        temp = arr[idx];
+        arr[idx] = arr[r];
+        arr[r] = temp;
+
+        quickSort(arr, l, idx - 1);
+        quickSort(arr, idx + 1, r);
+    }
+```
+
+
+
+## 其他排序
+
+### 计数排序
+
+找出待排序的数组中最大和最小的元素；
+
+统计数组中每个值为i的元素出现的次数，存入数组C的第i项， 对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）；
+
+反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1。
