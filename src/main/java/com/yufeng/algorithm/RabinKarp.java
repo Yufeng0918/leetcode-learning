@@ -41,7 +41,6 @@ public class RabinKarp {
                     txtHash += Q;
             }
         }
-
         return -1;
     }
 }
