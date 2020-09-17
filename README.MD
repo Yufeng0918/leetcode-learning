@@ -18,7 +18,7 @@
 
 
 
-## [5. 树](./doc/tree.md), [字典树](./doc/trie-tree.md)
+## [5. 树](./doc/tree.md)/[字典树](./doc/trie-tree.md)
 
 
 
@@ -47,5 +47,9 @@
 
 
 ## [12. 位运算](./doc/bit.md)
+
+
+
+## [13. 排序](./doc/sort.md)
 
 ![](./images/leetcode-00.jpg)
