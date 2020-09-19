@@ -6,7 +6,7 @@ public class BoyerMoore {
 
         BoyerMoore boyerMoore = new BoyerMoore();
 //        boyerMoore.generateGS("cabcab".toCharArray(), 6, new int[6], new boolean[6]);
-        String main = "xxxxxxxxxxxxxxxxxxxxxxxxabcacabcbcba";
+        String main = "abcacabcbcba";
         String pattern = "cbbcabc";
         System.out.println(boyerMoore.bm(main.toCharArray(), main.length(), pattern.toCharArray(), pattern.length()));
 //        abcacabcbcba
