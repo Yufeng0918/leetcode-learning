@@ -244,7 +244,37 @@ KMP 算法的核心思想，我们假设主串是 a，模式串是 b。在模式
 ![](../images/leetcode-31.jpg)
 
 ```java
-		// b表示模式串，m表示模式串的长度
+    // a, b分别是主串和模式串；n, m分别是主串和模式串的长度。
+    public static int kmp(char[] a, char[] b) {
+        int n = a.length;
+        int m = b.length;
+        int[] next = getNexts(b);
+
+        //j是模式串下标
+        int j = 0;
+
+        //i是主串下标
+        for (int i = 0; i < n; ++i) {
+
+            // 当模式串前缀和主串匹配，但是当前字符不匹配
+            // next[j - 1]是下一个可以匹配当前后缀的前缀
+            // j = next[j - 1] + 1 把模式串的可匹配前缀移动到末尾，再进行比较
+            while (j > 0 && a[i] != b[j]) {
+                j = next[j - 1] + 1;
+            }
+            if (a[i] == b[j]) {
+                ++j;
+            }
+            // 找到匹配模式串的了
+            if (j == m) {
+                return i - m + 1;
+            }
+        }
+        return -1;
+    }		
+
+
+    // b表示模式串，m表示模式串的长度
     // [-1, -1, 0, 1, 2, -1, -1]
     private static int[] getNexts(char[] b) {
         int m = b.length;
