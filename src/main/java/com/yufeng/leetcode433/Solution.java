@@ -31,5 +31,7 @@ public class Solution {
         //01100
         //10011 -> 10100
         //00100
+
+        System.out.println((1 | 0));
     }
 }

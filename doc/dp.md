@@ -1,7 +1,5 @@
 ## 动态规划
 
-
-
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
 | 62   | [不同路径](https://leetcode-cn.com/problems/unique-paths/)   | 1    |
@@ -18,25 +16,26 @@
 | 309  | [最佳买卖股票时机含冷冻期](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | 1    |
 | 123  | [买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/) | 1    |
 | 188  | [买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/) | 1    |
-|      |                                                              |      |
-|      |                                                              |      |
+| 300  | [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | 1    |
+| 32   | [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/) | 1    |
 |      |                                                              |      |
 |      |                                                              |      |
 |      |                                                              |      |
 
 
+
+## 概述
 
 ### 动态规划vs递归分支
 
-+ 没有根本区别
 + **共性**：找到重复的子问题
 + **差异**：最优子结构，中途可以淘汰次优解
 
 
 
-### 动态规划关键点
+### 关键
 
-#### 思考流程
+#### 状态定义/转移
 
 + 找到状态和选择
   + **状态**：有几种参数决定状态就是几维DP
@@ -44,7 +43,7 @@
 + 明确 dp 数组/函数的定义 
 + 寻找状态之间的关系
 
-#### 代码流程
+#### 代码
 
 + 最优子结构 opt[n] = best_of(opt[n-1], opt[n -2], ...)
 + 存储中间状态 opt[i]
