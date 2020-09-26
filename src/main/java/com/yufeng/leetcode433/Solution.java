@@ -33,5 +33,16 @@ public class Solution {
         //00100
 
         System.out.println((1 | 0));
+
+        System.out.println(Integer.numberOfLeadingZeros(5));
+        System.out.println((1 << 2) -1 ) ;
+
+
+        int b1 = 3;
+        int b2 = 6;
+        b1 = b1 ^ b2;
+        b2 = b1 ^ b2;
+        b1 = b1 ^ b2;
+        System.out.println(b1 + " " + b2);
     }
 }

@@ -18,9 +18,9 @@
 | 188  | [买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/) | 1    |
 | 300  | [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | 1    |
 | 32   | [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/) | 1    |
-|      |                                                              |      |
-|      |                                                              |      |
-|      |                                                              |      |
+| 818  | [赛车](https://leetcode-cn.com/problems/race-car/)           | 1    |
+| 746  | [使用最小花费爬楼梯](https://leetcode-cn.com/problems/min-cost-climbing-stairs/) | 1    |
+| 72   | [编辑距离](https://leetcode-cn.com/problems/edit-distance/)  | 1    |
 
 
 
