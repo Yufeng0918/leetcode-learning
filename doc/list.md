@@ -89,11 +89,19 @@ class LRUCache {
 
 ## 常用技巧
 
+### 初始条件
+
+可正可负， 是否处理0， 链表和数组是否有已知长度
+
+
+
 ### 哨兵
 
 引入哨兵结点，在任何时候，不管链表是不是空，head 指针都会一直指向这个哨兵结点。我们也把这种有哨兵结点的链表叫带头链表
 
 ![](../images/leetcode-12.jpg)
+
+
 
 ### 边界
 
@@ -124,6 +132,7 @@ class LRUCache {
 | 66   | 加一                                                         | https://leetcode-cn.com/problems/plus-one/                   | 2    |
 | 26   | 删除排序数组中的重复项                                       | https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ | 2    |
 | 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) |                                                              | 1    |
+| 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) |                                                              | 1    |
 | 206  | 反转链表                                                     | https://leetcode-cn.com/problems/reverse-linked-list/        | 3    |
 | 141  | 环形链表                                                     | https://leetcode-cn.com/problems/linked-list-cycle           | 2    |
 | 24   | 两两交换链表中的节点                                         | https://leetcode-cn.com/problems/swap-nodes-in-pairs/        | 2    |
