@@ -1,27 +1,7 @@
 # 数组/链表
 
-| 序号 | 题目                   | 连接                                                         | 次数 |
-| ---- | ---------------------- | ------------------------------------------------------------ | ---- |
-| 11   | 盛最多水的容器         | https://leetcode-cn.com/problems/container-with-most-water/  | 3    |
-| 15   | 三数之和               | https://leetcode-cn.com/problems/3sum/                       | 3    |
-| 283  | 移动零                 | https://leetcode-cn.com/problems/move-zeroes/                | 3    |
-| 206  | 反转链表               | https://leetcode-cn.com/problems/reverse-linked-list/        | 3    |
-| 141  | 环形链表               | https://leetcode-cn.com/problems/linked-list-cycle           | 2    |
-| 24   | 两两交换链表中的节点   | https://leetcode-cn.com/problems/swap-nodes-in-pairs/        | 2    |
-| 142  | 环形链表 II            | https://leetcode-cn.com/problems/linked-list-cycle-ii/       | 2    |
-| 25   | K 个一组翻转链表       | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/   | 2    |
-| 189  | 旋转数组               | https://leetcode-cn.com/problems/rotate-array/               | 2    |
-| 21   | 合并两个有序链表       | https://leetcode-cn.com/problems/merge-two-sorted-lists/     | 2    |
-| 88   | 合并两个有序数组       | https://leetcode-cn.com/problems/merge-sorted-array/         | 2    |
-| 1    | 两数之和               | https://leetcode-cn.com/problems/two-sum/                    | 2    |
-| 66   | 加一                   | https://leetcode-cn.com/problems/plus-one/                   | 2    |
-| 26   | 删除排序数组中的重复项 | https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ | 2    |
-
-
 
 ## 数组
-
-### 概述
 
 数组（Array）是一种线性表数据结构。它用一组连续的内存空间，来存储一组具有相同类型的数据。数组支持随机访问，根据**下标随机访问的时间复杂度为 O(1)**。
 
@@ -54,8 +34,6 @@
 
 
 ## 链表
-
-### 概述
 
 链表不需要一块连续的内存空间，它通过“指针”将一组零散的内存块串联起来使用
 
@@ -109,33 +87,53 @@ class LRUCache {
 
 
 
+## 常用技巧
 
-
-## 题解
-
-### 技巧
-
-#### 哨兵
+### 哨兵
 
 引入哨兵结点，在任何时候，不管链表是不是空，head 指针都会一直指向这个哨兵结点。我们也把这种有哨兵结点的链表叫带头链表
 
 ![](../images/leetcode-12.jpg)
 
-#### 边界条件
+### 边界
 
 + 如果链表为空时
 + 如果链表只包含一个结点时
 + 如果链表只包含两个结点时
 + 代码逻辑在处理头结点和尾结点的时候
 
-#### 举例画图，辅助思考
+
+
+### 画图
 
 ![](../images/leetcode-13.jpg)
 
 
 
+## 习题
+
+| 序号 | 题目                                                         | 连接                                                         | 次数 |
+| ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
+| 11   | [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) |                                                              | 4    |
+| 15   | 三数之和                                                     | https://leetcode-cn.com/problems/3sum/                       | 3    |
+| 283  | 移动零                                                       | https://leetcode-cn.com/problems/move-zeroes/                | 3    |
+| 189  | 旋转数组                                                     | https://leetcode-cn.com/problems/rotate-array/               | 2    |
+| 21   | 合并两个有序链表                                             | https://leetcode-cn.com/problems/merge-two-sorted-lists/     | 2    |
+| 88   | 合并两个有序数组                                             | https://leetcode-cn.com/problems/merge-sorted-array/         | 2    |
+| 1    | 两数之和                                                     | https://leetcode-cn.com/problems/two-sum/                    | 2    |
+| 66   | 加一                                                         | https://leetcode-cn.com/problems/plus-one/                   | 2    |
+| 26   | 删除排序数组中的重复项                                       | https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ | 2    |
+| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) |                                                              | 1    |
+| 206  | 反转链表                                                     | https://leetcode-cn.com/problems/reverse-linked-list/        | 3    |
+| 141  | 环形链表                                                     | https://leetcode-cn.com/problems/linked-list-cycle           | 2    |
+| 24   | 两两交换链表中的节点                                         | https://leetcode-cn.com/problems/swap-nodes-in-pairs/        | 2    |
+| 142  | 环形链表 II                                                  | https://leetcode-cn.com/problems/linked-list-cycle-ii/       | 2    |
+| 25   | K 个一组翻转链表                                             | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/   | 2    |
+
+
 ### 左右指针移动
 
+- 左右两个指针，**li < ho 作为外层循环和指针移动条件**
 - 指针并不是每次移动一次，**指针循环移动到符合规定的目标位置(预先存储)**
 
 ```java
@@ -148,7 +146,7 @@ class Solution {
         while (i < j) {
             int loMax = height[i];
             int hiMax = height[j];
-            max = Math.max(Math.min(height[i], height[j]) * (j - i), max);
+            // max = Math.max(Math.min(height[i], height[j]) * (j - i), max);
 
             // without this, TLE will occur
             if (height[i] <= height[j]) {
