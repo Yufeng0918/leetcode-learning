@@ -123,14 +123,15 @@ class LRUCache {
 | 序号 | 题目                                                         | 连接                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
 | 11   | [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) |                                                              | 4    |
-| 15   | 三数之和                                                     | https://leetcode-cn.com/problems/3sum/                       | 3    |
-| 283  | 移动零                                                       | https://leetcode-cn.com/problems/move-zeroes/                | 3    |
+| 15   | [三数之和](https://leetcode-cn.com/problems/3sum/)           |                                                              | 4    |
+| 283  | [移动零](https://leetcode-cn.com/problems/move-zeroes/)      |                                                              | 4    |
 | 189  | 旋转数组                                                     | https://leetcode-cn.com/problems/rotate-array/               | 2    |
 | 21   | 合并两个有序链表                                             | https://leetcode-cn.com/problems/merge-two-sorted-lists/     | 2    |
 | 88   | 合并两个有序数组                                             | https://leetcode-cn.com/problems/merge-sorted-array/         | 2    |
 | 1    | 两数之和                                                     | https://leetcode-cn.com/problems/two-sum/                    | 2    |
 | 66   | 加一                                                         | https://leetcode-cn.com/problems/plus-one/                   | 2    |
-| 26   | 删除排序数组中的重复项                                       | https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ | 2    |
+| 26   | 删除排序数组中的重复项                                       | https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ | 3    |
+| 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) |                                                              | 1    |
 | 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) |                                                              | 1    |
 | 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) |                                                              | 1    |
 | 206  | 反转链表                                                     | https://leetcode-cn.com/problems/reverse-linked-list/        | 3    |
@@ -235,11 +236,12 @@ class Solution {
 
 ### 数组分区
 
-- 分为左右两区，一个两个指针
-  - 循环指针：循环数组
-  - 边界指针：保持左边下一次的位置，符合条件进行交换，只有交换后才更改边界指针
-  - 边界指针和循环指针**初始位置必须一致**
-- 循环数组，循环指针指向符合左边的元素进行交换，边界指针加一
+分为左右两区，一个两个指针
+- 循环指针：循环数组
+- 边界指针：保持左边下一次的位置，符合条件进行交换，只有交换后才更改边界指针
+- 边界指针和循环指针**初始位置必须一致**
+
+循环数组，循环指针指向符合左边的元素进行交换，边界指针加一
 
 ```java
 class Solution {
