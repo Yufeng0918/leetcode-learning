@@ -44,15 +44,15 @@
 | 11   | [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) | 4    |
 | 15   | [三数之和](https://leetcode-cn.com/problems/3sum/)           | 4    |
 | 283  | [移动零](https://leetcode-cn.com/problems/move-zeroes/)      | 4    |
-| 189  | [旋转数组](https://leetcode-cn.com/problems/rotate-array/)   | 2    |
-| 88   | [合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) | 2    |
-| 1    | [两数之和](https://leetcode-cn.com/problems/two-sum/)        | 2    |
+| 189  | [旋转数组](https://leetcode-cn.com/problems/rotate-array/)   | 3    |
+| 88   | [合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) | 3    |
+| 1    | [两数之和](https://leetcode-cn.com/problems/two-sum/)        | 4    |
 | 66   | [加一](https://leetcode-cn.com/problems/plus-one/)           | 3    |
 | 26   | [删除排序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/) | 4    |
-| 80   | [删除排序数组中的重复项 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/) | 1    |
-| 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) | 1    |
-| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) | 1    |
-| 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) | 1    |
+| 80   | [删除排序数组中的重复项 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/) | 2    |
+| 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) | 2    |
+| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) | 2    |
+| 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) | 2    |
 
 
 
@@ -154,7 +154,9 @@ class Solution {
 
 分为左右两区，**两个指针**，一个快指针循环数组，一个边界指针
 - 循环指针：循环数组
-- 边界指针：保持左边下一次的位置，符合条件进行交换，只有交换后才更改边界指针
+- 边界指针
+  - **保持左边下一次的位置**，符合条件进行交换，只有交换后才更改边界指针
+  - **符合条件最后一个元素是 bound - 1**
 - 边界指针和循环指针**初始位置必须一致**
 
 循环数组，循环指针指向符合左边的元素进行交换，边界指针加一
@@ -178,3 +180,34 @@ class Solution {
     }
 }
 ```
+
+
+
+### 双数组双指针
+
+两个有序数组合并
+
++ 两个数组各维护一个指针
++ 合并的数组单独一个指针
++ 在两个数组都为空的循环里面，**每次当个数组的循环必须遵循外圈循环的条件**, 每个循环必须检查**m >= 0 && n >= 0** 
+
+```JAVA
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+
+        if (nums1.length == 0 || nums2.length == 0) return;
+
+        int i = nums1.length - 1;
+        m--;
+        n--;
+        while(m >= 0 && n >= 0) {
+            while(m >= 0 && n >= 0 && nums1[m] >= nums2[n]) nums1[i--] = nums1[m--];
+            while(m >= 0 && n >= 0 && nums1[m] < nums2[n]) nums1[i--] = nums2[n--];
+        }
+
+        while(m >= 0) nums1[i--] = nums1[m--];
+        while(n >= 0) nums1[i--] = nums2[n--];
+    }
+}
+```
+
