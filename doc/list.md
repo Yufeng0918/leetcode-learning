@@ -120,28 +120,30 @@ class LRUCache {
 
 ## 习题
 
-| 序号 | 题目                                                         | 连接                                                         | 次数 |
-| ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | ---- |
-| 11   | [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) |                                                              | 4    |
-| 15   | [三数之和](https://leetcode-cn.com/problems/3sum/)           |                                                              | 4    |
-| 283  | [移动零](https://leetcode-cn.com/problems/move-zeroes/)      |                                                              | 4    |
-| 189  | 旋转数组                                                     | https://leetcode-cn.com/problems/rotate-array/               | 2    |
-| 21   | 合并两个有序链表                                             | https://leetcode-cn.com/problems/merge-two-sorted-lists/     | 2    |
-| 88   | 合并两个有序数组                                             | https://leetcode-cn.com/problems/merge-sorted-array/         | 2    |
-| 1    | 两数之和                                                     | https://leetcode-cn.com/problems/two-sum/                    | 2    |
-| 66   | 加一                                                         | https://leetcode-cn.com/problems/plus-one/                   | 2    |
-| 26   | 删除排序数组中的重复项                                       | https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/ | 3    |
-| 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) |                                                              | 1    |
-| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) |                                                              | 1    |
-| 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) |                                                              | 1    |
-| 206  | 反转链表                                                     | https://leetcode-cn.com/problems/reverse-linked-list/        | 3    |
-| 141  | 环形链表                                                     | https://leetcode-cn.com/problems/linked-list-cycle           | 2    |
-| 24   | 两两交换链表中的节点                                         | https://leetcode-cn.com/problems/swap-nodes-in-pairs/        | 2    |
-| 142  | 环形链表 II                                                  | https://leetcode-cn.com/problems/linked-list-cycle-ii/       | 2    |
-| 25   | K 个一组翻转链表                                             | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/   | 2    |
+| 序号 | 题目                                                         | 连接                                                       | 次数 |
+| ---- | ------------------------------------------------------------ | ---------------------------------------------------------- | ---- |
+| 11   | [盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/) |                                                            | 4    |
+| 15   | [三数之和](https://leetcode-cn.com/problems/3sum/)           |                                                            | 4    |
+| 283  | [移动零](https://leetcode-cn.com/problems/move-zeroes/)      |                                                            | 4    |
+| 189  | 旋转数组                                                     | https://leetcode-cn.com/problems/rotate-array/             | 2    |
+| 21   | 合并两个有序链表                                             | https://leetcode-cn.com/problems/merge-two-sorted-lists/   | 2    |
+| 88   | 合并两个有序数组                                             | https://leetcode-cn.com/problems/merge-sorted-array/       | 2    |
+| 1    | 两数之和                                                     | https://leetcode-cn.com/problems/two-sum/                  | 2    |
+| 66   | 加一                                                         | https://leetcode-cn.com/problems/plus-one/                 | 2    |
+| 26   | [删除排序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/) |                                                            | 4    |
+| 80   | [删除排序数组中的重复项 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/) |                                                            | 1    |
+| 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) |                                                            | 1    |
+| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) |                                                            | 1    |
+| 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) |                                                            | 1    |
+| 206  | 反转链表                                                     | https://leetcode-cn.com/problems/reverse-linked-list/      | 3    |
+| 141  | 环形链表                                                     | https://leetcode-cn.com/problems/linked-list-cycle         | 2    |
+| 24   | 两两交换链表中的节点                                         | https://leetcode-cn.com/problems/swap-nodes-in-pairs/      | 2    |
+| 142  | 环形链表 II                                                  | https://leetcode-cn.com/problems/linked-list-cycle-ii/     | 2    |
+| 25   | K 个一组翻转链表                                             | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/ | 2    |
 
 
-### 左右指针移动
+
+### 数组-左右指针
 
 - 左右两个指针，**li < ho 作为外层循环和指针移动条件**
 - 指针并不是每次移动一次，**指针循环移动到符合规定的目标位置(预先存储)**
@@ -172,7 +174,7 @@ class Solution {
 
 
 
-### 已排序的左右指针
+### 数组-排序左右指针
 
 - 比较上一次的位置来避免重复数字
 - 在移动指针的时候，先移动过滤到重复的数字，再次则在移动
@@ -234,9 +236,9 @@ class Solution {
 
 
 
-### 数组分区
+### 数组-数组分区
 
-分为左右两区，一个两个指针
+分为左右两区，**两个指针**，一个快指针循环数组，一个边界指针
 - 循环指针：循环数组
 - 边界指针：保持左边下一次的位置，符合条件进行交换，只有交换后才更改边界指针
 - 边界指针和循环指针**初始位置必须一致**

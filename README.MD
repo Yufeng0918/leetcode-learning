@@ -32,7 +32,7 @@
 
 
 
-## [2. 数组/链表](./doc/list.md)
+## [2. 数组](./doc/arr.md)/[链表](./doc/list.md)
 
 
 
