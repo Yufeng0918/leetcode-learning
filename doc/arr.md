@@ -1,7 +1,5 @@
 # 数组
 
-
-
 ## 概述
 
 数组（Array）是一种线性表数据结构。它用一组连续的内存空间，来存储一组具有相同类型的数据。数组支持随机访问，根据**下标随机访问的时间复杂度为 O(1)**。
@@ -16,7 +14,7 @@
 
 
 
-#### 插入
+### 插入
 
 如果在数组的末尾插入元素，不需要移动数据，时间复杂度为 O(1)。
 
@@ -26,7 +24,7 @@
 
 
 
-#### 删除
+### 删除
 
 如果删除数组末尾的数据，则最好情况时间复杂度为 O(1)
 
@@ -45,14 +43,14 @@
 | 15   | [三数之和](https://leetcode-cn.com/problems/3sum/)           | 4    |
 | 283  | [移动零](https://leetcode-cn.com/problems/move-zeroes/)      | 4    |
 | 189  | [旋转数组](https://leetcode-cn.com/problems/rotate-array/)   | 3    |
-| 88   | [合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) | 3    |
+| 88   | [合并两个有序数组](https://leetcode-cn.com/problems/merge-sorted-array/) | 4    |
 | 1    | [两数之和](https://leetcode-cn.com/problems/two-sum/)        | 4    |
 | 66   | [加一](https://leetcode-cn.com/problems/plus-one/)           | 3    |
 | 26   | [删除排序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/) | 4    |
-| 80   | [删除排序数组中的重复项 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/) | 2    |
-| 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) | 2    |
-| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) | 2    |
-| 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) | 2    |
+| 80   | [删除排序数组中的重复项 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/) | 3    |
+| 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) | 3    |
+| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/)3 | 2    |
+| 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) | 3    |
 
 
 
@@ -207,6 +205,43 @@ class Solution {
 
         while(m >= 0) nums1[i--] = nums1[m--];
         while(n >= 0) nums1[i--] = nums2[n--];
+    }
+}
+```
+
+
+
+### 边界选择
+
+当数值是整数时，Integer可能并不适合用于做边界初始值，可以用长整形Long来做边界初始值
+
+```JAVA
+class Solution {
+    public int thirdMax(int[] nums) {
+        
+        Long num1 = Long.MIN_VALUE, num2 = Long.MIN_VALUE, num3 = Long.MIN_VALUE;
+        
+        for(int i = 0; i < nums.length; i++) {
+            if (nums[i] > num1) {
+                num1 = Long.valueOf(nums[i]);
+            }
+        }
+
+        for(int i = 0; i < nums.length; i++) {
+            if (nums[i] > num2 && nums[i] != num1.intValue()) {
+                num2 = Long.valueOf(nums[i]);
+            }
+        }
+        if (num2 == Long.MIN_VALUE) return num1.intValue();
+        
+
+        for(int i = 0; i < nums.length; i++) {
+            if (nums[i] > num3 && nums[i] != num1.intValue() && nums[i] != num2.intValue()) {
+                num3 = Long.valueOf(nums[i]);
+            }
+        }
+
+        return num3 == Long.MIN_VALUE ? num1.intValue() : num3.intValue();
     }
 }
 ```
