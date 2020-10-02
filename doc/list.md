@@ -85,17 +85,47 @@ class LRUCache {
 
 ## 习题
 
-| 序号 | 题目                                                         | 连接                                                       | 次数 |
-| ---- | ------------------------------------------------------------ | ---------------------------------------------------------- | ---- |
-| 206  | 反转链表                                                     | https://leetcode-cn.com/problems/reverse-linked-list/      | 3    |
-| 24   | 两两交换链表中的节点                                         | https://leetcode-cn.com/problems/swap-nodes-in-pairs/      | 2    |
-| 25   | K 个一组翻转链表                                             | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/ | 2    |
-| 141  | 环形链表                                                     | https://leetcode-cn.com/problems/linked-list-cycle         | 2    |
-| 142  | 环形链表 II                                                  | https://leetcode-cn.com/problems/linked-list-cycle-ii/     | 2    |
+| 序号 | 题目                                                         | 次数 |
+| ---- | ------------------------------------------------------------ | ---- |
+| 206  | [反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 4    |
+| 24   | [两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 3    |
+| 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 3    |
+| 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 3    |
+| 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 3    |
 
 
 
 ### 链表翻转
+
+#### 循环反转
+
+循环到当前节点为NULL位置，NULL之前的节点都已经完成翻转
+
+如果只有一个节点，那么头节点还是执行一次，因为prev设置成NULL
+
+**head == null || head.next == null 为最基础单元**
+
+**prev一定比curr先移动**
+
+```JAVA
+class Solution {
+    
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode next = head.next;
+        ListNode newHead = reverseList(next);
+        next.next = head;
+        head.next = null;
+
+        return newHead;
+    }
+}
+```
+
+
 
 #### 递归反转
 
@@ -129,41 +159,15 @@ class Solution {
 
 
 
-#### 循环反转
-
-循环到当前节点为NULL位置，NULL之前的节点都已经完成翻转
-
-如果只有一个节点，那么头节点还是执行一次，因为prev设置成NULL
-
-**head == null || head.next == null 为最基础单元**
-
-**prev一定比curr先移动**
-
-```JAVA
-class Solution {
-    
-    public ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
-        }
-
-        ListNode next = head.next;
-        ListNode newHead = reverseList(next);
-        next.next = head;
-        head.next = null;
-
-        return newHead;
-    }
-}
-```
-
-
-
 
 
 ### 两两交换链表中的节点
 
-- 无论当前子链表是否翻转，都需要把主链连接到子链边
+#### 循环交换
+
+无论当前子链表是否翻转，**都需要把主链连接到子链边**
+
+**利用dummyHead来简化head的指针变化**
 
 ```java
 class Solution {
@@ -195,6 +199,35 @@ class Solution {
     }
 }
 ```
+
+
+
+#### 递归交换
+
+假设后面已经两两交换完成
+
+当前必须node和node.next 同时存在才交换，否则说明已经到达终点
+
+```JAVA
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+
+        if (head == null || head.next == null) return head;
+
+        ListNode first = head;
+        ListNode second = head.next;
+        ListNode next = swapPairs(second.next);
+
+        first.next = next;
+        second.next = first;
+        return second;
+    }
+}
+```
+
+
+
+
 
 
 
