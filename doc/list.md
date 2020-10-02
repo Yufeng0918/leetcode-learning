@@ -88,10 +88,10 @@ class LRUCache {
 | 序号 | 题目                                                         | 连接                                                       | 次数 |
 | ---- | ------------------------------------------------------------ | ---------------------------------------------------------- | ---- |
 | 206  | 反转链表                                                     | https://leetcode-cn.com/problems/reverse-linked-list/      | 3    |
-| 141  | 环形链表                                                     | https://leetcode-cn.com/problems/linked-list-cycle         | 2    |
 | 24   | 两两交换链表中的节点                                         | https://leetcode-cn.com/problems/swap-nodes-in-pairs/      | 2    |
-| 142  | 环形链表 II                                                  | https://leetcode-cn.com/problems/linked-list-cycle-ii/     | 2    |
 | 25   | K 个一组翻转链表                                             | https://leetcode-cn.com/problems/reverse-nodes-in-k-group/ | 2    |
+| 141  | 环形链表                                                     | https://leetcode-cn.com/problems/linked-list-cycle         | 2    |
+| 142  | 环形链表 II                                                  | https://leetcode-cn.com/problems/linked-list-cycle-ii/     | 2    |
 
 
 
@@ -128,6 +128,7 @@ class Solution {
         return prev;
     }
 }
+
 class Solution {
     
     public ListNode reverseList(ListNode head) {
