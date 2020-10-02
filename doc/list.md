@@ -97,16 +97,13 @@ class LRUCache {
 
 ### 链表翻转
 
-- 找出最简单的case
-- 假设上一步已经完成
-- 递归反转
-  - 最小任务是当前节点没有下一个节点
-  - curr.next 必须设置为NULL，不然头节点会形成环链表
-- 循环法
-  - 循环到当前节点为NULL位置，NULL之前的节点都已经完成翻转
-  - 如果只有一个节点，那么头节点还是执行一次，因为prev设置成NULL
-- **head == null || head.next == null 为最基础单元**
-- prev一定比curr先移动
+#### 递归反转
+
+**假设后面的链表已经反转好了**
+
+找出最简单的case, 最小任务是当前节点没有下一个节点
+
+curr.next 必须设置为NULL，不然头节点会形成环链表
 
 ```java
 class Solution {
@@ -128,7 +125,21 @@ class Solution {
         return prev;
     }
 }
+```
 
+
+
+#### 循环反转
+
+循环到当前节点为NULL位置，NULL之前的节点都已经完成翻转
+
+如果只有一个节点，那么头节点还是执行一次，因为prev设置成NULL
+
+**head == null || head.next == null 为最基础单元**
+
+**prev一定比curr先移动**
+
+```JAVA
 class Solution {
     
     public ListNode reverseList(ListNode head) {
@@ -148,6 +159,8 @@ class Solution {
 
 
 
+
+
 ### 两两交换链表中的节点
 
 - 无论当前子链表是否翻转，都需要把主链连接到子链边
@@ -155,49 +168,30 @@ class Solution {
 ```java
 class Solution {
     public ListNode swapPairs(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
-        }
 
-        ListNode prev = null;
-        ListNode curr = head;
-        ListNode next;
-        
-        while(curr != null) {
+        if (head == null || head.next == null) return head;
+
+        ListNode prev = new ListNode(0);
+        prev.next = head;
+
+        ListNode next = null, node1 = head, node2 = head.next,  dummyHead = prev;
+        while (node1 != null && node2 != null) {
             
-            // data initilization
-            ListNode first = curr;
-            ListNode second = curr.next;
+            // get node1, node2, next
+            node2 = node1.next;
+            next = node2.next;
 
-            if (second == null) {
-                // link if sublist no change
-                if (prev == null) {
-                    head = first;
-                } else {
-                    prev.next = first;
-                }
-                break;
-            }
-            next = second.next;
+            // relink
+            node2.next = node1;
+            node1.next = next;
+            prev.next = node2;
 
-            // swap
-            // link to second
-            if (prev == null) {
-                head = second;
-            } else {
-                prev.next = second;
-            }
-            // link to first
-            second.next = first;
-            first.next = null;
-            // System.out.println("head: " + head);
-            // System.out.println("second: " + second);
-
-            //rotate to next
-            prev = first;
-            curr = next;
+            // move
+            prev = node1;
+            node1 = next;
         }
-        return head;
+
+        return dummyHead.next;
     }
 }
 ```
