@@ -88,8 +88,8 @@ class LRUCache {
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
 | 206  | [反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 4    |
-| 24   | [两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 3    |
-| 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 3    |
+| 24   | [两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 4    |
+| 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 4    |
 | 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 3    |
 | 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 3    |
 
@@ -161,7 +161,7 @@ class Solution {
 
 
 
-### 两两交换链表中的节点
+### 两两反转链表
 
 #### 循环交换
 
@@ -227,6 +227,119 @@ class Solution {
 
 
 
+### K 个一组翻转链表
+
+#### 循环交换
+
+获取curr，last 和 next
+
+**注意子链表重新链接主链表的节点位置，画图求解**
+
+```java
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+
+        if (head == null || head.next == null) return head;
+
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+
+        ListNode curr = head, node = curr, prev = dummyHead, last = null, next = null;
+         while(curr != null) {
+
+            // get last
+            int i = 1;
+            node = curr;
+            while(node != null && i < k) {
+                node = node.next;
+                i++;
+            }
+            if (node == null) break;
+            last = node;
+            next = last.next;
+
+            // reverse
+            last.next = null;
+            node = curr;
+            reverseList(node);
+            prev.next = last;
+            curr.next = next;
+
+            prev = curr;
+            curr = next;
+        }
+
+        return dummyHead.next;
+    }
+
+    public void reverseList(ListNode head) {
+
+        if (head == null || head.next == null) return;
+
+        ListNode prev = null, next = null;
+        while(head != null) {
+            next = head.next;
+            head.next = prev;
+
+            prev = head;
+            head = next;
+        }
+    }
+}
+```
+
+
+
+#### 递归交换
+
+**先反转子链表，再反转当前链表**
+
+返回当前链表的头结点
+
+```JAVA
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+
+        if (head == null || head.next == null) return head;
+
+        int i = 1;
+        ListNode node = head, curr = node;
+        while (node != null && i < k) {
+            node = node.next;
+            i++;
+        }
+        if (node == null) return curr;
+
+        ListNode last = node;
+        ListNode next = last.next;
+
+        node = curr;
+        ListNode subList = reverseKGroup(next, k);
+        last.next = null;
+
+        ListNode currHead = reverseSubList(node);
+        curr.next = subList;
+
+        return currHead;
+    }
+
+    public ListNode reverseSubList(ListNode head) {
+
+        if (head == null || head.next == null) return head;
+
+        ListNode next = head.next;
+        ListNode newHead = reverseSubList(next);
+        next.next = head;
+        head.next = null;
+        return newHead;
+    }
+}
+```
+
+
+
+
+
 
 
 
@@ -258,3 +371,4 @@ while (fast != null && slow!= null) {
 }
 return false;
 ```
+
