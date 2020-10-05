@@ -90,8 +90,8 @@ class LRUCache {
 | 206  | [反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 4    |
 | 24   | [两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 4    |
 | 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 4    |
-| 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 3    |
-| 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 3    |
+| 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 4    |
+| 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 4    |
 
 
 
@@ -340,10 +340,6 @@ class Solution {
 
 
 
-
-
-
-
 ### 快慢指针
 
 - 快慢指针起始位置可以不同也可以相同
@@ -370,5 +366,16 @@ while (fast != null && slow!= null) {
     }
 }
 return false;
+```
+
++ 如果有环，那么**从起点到环开始的距离 == 快慢指针相交点到环开始的距离**
+
+![](../images/leetcode-32.png)
+
+```java
+2⋅distance(tortoise) = distance(hare) 
+2(F+a) = F+a+b+a
+2F+2a = F+2a+b
+F = b
 ```
 
