@@ -90,6 +90,7 @@ class LRUCache {
 | 206  | [反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 4    |
 | 24   | [两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 4    |
 | 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 4    |
+| 234  | [回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/) | 2    |
 | 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 4    |
 | 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 4    |
 
@@ -434,6 +435,77 @@ class Solution {
         }
 
         return next;
+    }
+}
+```
+
+
+
+### 回文链表
+
+#### 字符串拼接
+
+```JAVA
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+
+        if (head == null || head.next == null) return true;
+        
+        StringBuilder str1 = new StringBuilder();
+        StringBuilder str2 = new StringBuilder();
+        ListNode node = head;
+        while(node != null) {
+            str1.append(node.val);
+            str2.insert(0, node.val);
+            node = node.next;
+        }
+
+        return str2.toString().equals(str1.toString());
+    }
+}
+```
+
+#### 快慢指针 + 翻转
+
++ 添加了dummy头注意移除
++ 注意奇数和偶数在重置链表头的关系
+  + 奇数：那么慢指针已经是中间那位，所以head1其实位置是prev
+  + 偶数：head1正好是慢指针
+
+```JAVA
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+
+        if (head == null || head.next == null) return true;
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode slow = dummy, fast = dummy, prev = dummy, next = head;
+
+        while (slow != null && fast != null && fast.next != null) {
+
+            fast = fast.next.next;
+            prev = slow;
+            slow = next;
+            next = slow.next;
+
+            //reverse
+            slow.next = prev;
+            if (prev == dummy) {
+                prev.next = null;
+            }
+        }
+
+        head.next = null;
+        ListNode head1 = slow, head2 = next;
+        if (fast == null) head1 = prev;
+
+        while(head1 != null && head2 != null) {
+            if (head1.val != head2.val) return false;
+            head1 = head1.next;
+            head2 = head2.next;
+        }
+        return head1 == head2;
     }
 }
 ```
