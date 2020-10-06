@@ -338,34 +338,27 @@ class Solution {
 
 
 
-
-
-### 快慢指针
+### 环状链表-快慢指针
 
 - 快慢指针起始位置可以不同也可以相同
 - 只需要比较快慢指针的整数倍即可，**比如起始位置相同，不能比较中间步数，第一次会被误杀**
+- 注意循环条件：**slow != null && fast != null && fast.next != null**
 
 ```java
-ListNode slow = head;
-ListNode fast = head;
-while (fast != null && slow!= null) {
-    //slow move
-    if (slow == null || slow.next == null) {
-        return false;
-    }
-    slow = slow.next;
-    
-    //fast move two step
-    if (fast.next == null || fast.next.next == null) {
-        return false;
-    }
-    fast = fast.next.next;
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        
+        ListNode slow = head;
+        ListNode fast = head;
 
-    if (fast == slow) {
-        return true;
+       while(slow != null && fast != null && fast.next != null) {
+           slow = slow.next;
+           fast = fast.next.next;
+           if (slow == fast) return true;
+       }
+        return false;
     }
 }
-return false;
 ```
 
 + 如果有环，那么**从起点到环开始的距离 == 快慢指针相交点到环开始的距离**
@@ -378,4 +371,72 @@ return false;
 2F+2a = F+2a+b
 F = b
 ```
+
+
+
+### 删除倒数第N个节点
+
+#### 双指针
+
++ 利用dummy头来统一第一个节点和之后节点的处理
++ 画图，当快指向最后一个指针的时候，慢指针应该指向倒数N+1个节点
++ **慢指针应该从dummy头开始**
+
+```JAVA
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+
+        if (head == null) return head;
+
+        ListNode p = head;
+        for(int i = 1; i < n; i++) {
+            p = p.next;
+        }
+
+
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode q = dummy;
+        while(p.next != null) {
+            p = p.next;
+            q = q.next;
+        }
+        
+        q.next = q.next.next;
+        return dummy.next;
+    }
+}
+```
+
+#### 递归
+
++ dummy头简化递归长度是K，删除第K个元素的情况
++ 从后面开始倒数元素
+
+```java
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+
+        if (head == null) return head;
+
+       ListNode dummy = new ListNode();
+       dummy.next = head;
+       count(dummy, n);
+       return dummy.next;
+    }
+
+    public int count(ListNode node, int n) {
+        if (node.next == null) return 1;
+
+        int next = count(node.next, n) + 1;
+        if (next == n + 1) {
+            node.next = node.next.next;
+        }
+
+        return next;
+    }
+}
+```
+
+
 
