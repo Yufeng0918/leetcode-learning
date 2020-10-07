@@ -93,6 +93,7 @@ class LRUCache {
 | 234  | [回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/) | 2    |
 | 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 4    |
 | 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 4    |
+| 2    | [两数相加](https://leetcode-cn.com/problems/add-two-numbers/) | 2    |
 
 
 
@@ -375,9 +376,7 @@ F = b
 
 
 
-### 删除倒数第N个节点
-
-#### 双指针
+### 删除倒数第N个节点-前后指针
 
 + 利用dummy头来统一第一个节点和之后节点的处理
 + 画图，当快指向最后一个指针的时候，慢指针应该指向倒数N+1个节点
@@ -409,35 +408,58 @@ class Solution {
 }
 ```
 
-#### 递归
 
-+ dummy头简化递归长度是K，删除第K个元素的情况
-+ 从后面开始倒数元素
 
-```java
+### 旋转链表-前后指针
+
++ 注意前后指针的循环条件和终止条件
++ 循环终止后的指针指向
+
+```JAVA
 class Solution {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
+    public ListNode rotateRight(ListNode head, int k) {
+    
+        if (head == null || head.next == null) return head;
 
-        if (head == null) return head;
-
-       ListNode dummy = new ListNode();
-       dummy.next = head;
-       count(dummy, n);
-       return dummy.next;
-    }
-
-    public int count(ListNode node, int n) {
-        if (node.next == null) return 1;
-
-        int next = count(node.next, n) + 1;
-        if (next == n + 1) {
-            node.next = node.next.next;
+        int size = 0;
+        ListNode node = head;
+        while(node != null) {
+            size++;
+            node = node.next;
         }
 
-        return next;
+        k = k % size;
+        if (k == 0) return head;
+
+        ListNode fast = head;
+        int step  = 0;
+        while (step < k) {
+            step++;
+            fast = fast.next;
+        }
+        
+        ListNode slow = head;
+        while(fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        ListNode newHead = slow.next;
+        fast.next = head;
+        slow.next = null;
+
+        return newHead;
     }
 }
 ```
+
+
+
+
+
+
+
+
 
 
 
@@ -511,4 +533,50 @@ class Solution {
 ```
 
 
+
+### 两数相加-双链表
+
++ 两个链表同时有值和只有一个有值在分开的循环
++ 注意链表最后是否有特殊处理
+
+```JAVA
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+
+        ListNode dummy = new ListNode(), node = dummy;
+
+        int bit = 0, sum, val;
+        while(l1 != null && l2 != null) {
+            sum = l1.val + l2.val + bit;
+            val = sum % 10;
+            bit = sum / 10;
+            node.next = new ListNode(val);
+            node = node.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+
+         while(l1 != null) {
+             sum = l1.val + bit;
+             val = sum % 10;
+             bit = sum / 10;
+             node.next = new ListNode(val);
+             node = node.next;
+             l1 = l1.next;
+         }
+
+         while(l2 != null) {
+             sum = l2.val + bit;
+             val = sum % 10;
+             bit = sum / 10;
+             node.next = new ListNode(val);
+             node = node.next;
+             l2 = l2.next;
+        }
+
+        if (bit == 1) node.next = new ListNode(1);
+        return dummy.next;
+    }
+}
+```
 
