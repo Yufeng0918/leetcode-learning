@@ -87,12 +87,13 @@ class LRUCache {
 
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 707  | [设计链表](https://leetcode-cn.com/problems/design-linked-list/) | 1    |
 | 206  | [反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 4    |
 | 24   | [两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 4    |
 | 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 4    |
 | 234  | [回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/) | 2    |
 | 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 4    |
+| 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 4    |
+| 2    | [两数相加](https://leetcode-cn.com/problems/add-two-numbers/) | 2    |
 | 160  | [相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/) | 1    |
 | 19   | [删除链表的倒数第N个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | 2    |
 | 328  | [奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/) | 1    |
