@@ -36,7 +36,7 @@
 
 
 
-## [3. 栈/队列](./doc/stack-queue.md)
+## [3. 栈](./doc/stack-queue.md)/队列
 
 
 
