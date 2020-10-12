@@ -1,4 +1,4 @@
-# 栈/队列
+# 栈
 
 ## 概述
 
@@ -58,7 +58,6 @@
 | 155  | 最小栈             | https://leetcode-cn.com/problems/min-stack/                  | 2    |
 | 84   | 柱状图中最大的矩形 | https://leetcode-cn.com/problems/largest-rectangle-in-histogram | 2    |
 | 239  | 滑动窗口最大值     | https://leetcode-cn.com/problems/sliding-window-maximum      | 2    |
-| 641  | 设计循环双端队列   | https://leetcode-cn.com/problems/design-circular-deque       | 2    |
 | 42   | 接雨水             | https://leetcode-cn.com/problems/trapping-rain-water/        | 2    |
 
 
