@@ -107,18 +107,18 @@ class LRUCache {
 
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 206  | [反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 4    |
+| 206  | [反转链表](https://leetcode-cn.com/problems/reverse-linked-list/) | 5    |
 | 24   | [两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/) | 4    |
-| 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 4    |
-| 234  | [回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/) | 2    |
+| 25   | [K 个一组翻转链表](https://leetcode-cn.com/problems/reverse-nodes-in-k-group/) | 5    |
+| 234  | [回文链表](https://leetcode-cn.com/problems/palindrome-linked-list/) | 3    |
 | 141  | [环形链表](https://leetcode-cn.com/problems/linked-list-cycle/) | 4    |
 | 142  | [环形链表 II](https://leetcode-cn.com/problems/linked-list-cycle-ii/) | 4    |
-| 2    | [两数相加](https://leetcode-cn.com/problems/add-two-numbers/) | 2    |
-| 160  | [相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/) | 1    |
-| 19   | [删除链表的倒数第N个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | 2    |
-| 328  | [奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/) | 1    |
-| 61   | [旋转链表](https://leetcode-cn.com/problems/rotate-list/)    | 1    |
-| 430  | [扁平化多级双向链表](https://leetcode-cn.com/problems/flatten-a-multilevel-doubly-linked-list/) | 1    |
+| 2    | [两数相加](https://leetcode-cn.com/problems/add-two-numbers/) | 3    |
+| 160  | [相交链表](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/) | 2    |
+| 19   | [删除链表的倒数第N个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/) | 3    |
+| 328  | [奇偶链表](https://leetcode-cn.com/problems/odd-even-linked-list/) | 2    |
+| 61   | [旋转链表](https://leetcode-cn.com/problems/rotate-list/)    | 2    |
+| 430  | [扁平化多级双向链表](https://leetcode-cn.com/problems/flatten-a-multilevel-doubly-linked-list/) | 2    |
 
 
 
@@ -165,20 +165,18 @@ curr.next 必须设置为NULL，不然头节点会形成环链表
 ```java
 class Solution {
     public ListNode reverseList(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
-        }
 
-        ListNode prev = null;
-        ListNode curr = head;
-        ListNode next;
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
+        if (head == null || head.next == null) return head;
 
-            prev = curr;
-            curr = next;
+        ListNode prev = null, node = head, next = null;
+        while(node != null) {
+            next = node.next;
+            node.next = prev;
+            
+            prev = node;
+            node = next;
         }
+        
         return prev;
     }
 }
@@ -199,30 +197,26 @@ class Solution {
 ```java
 class Solution {
     public ListNode swapPairs(ListNode head) {
-
+        
         if (head == null || head.next == null) return head;
 
-        ListNode prev = new ListNode(0);
-        prev.next = head;
+        ListNode dummy = new ListNode();
+        dummy.next = head;
 
-        ListNode next = null, node1 = head, node2 = head.next,  dummyHead = prev;
-        while (node1 != null && node2 != null) {
-            
-            // get node1, node2, next
+        ListNode prev = dummy, node1 = head, next = null, node2 = null;
+        while(node1 != null && node1.next != null) {
+            next = node1.next.next;
             node2 = node1.next;
-            next = node2.next;
 
-            // relink
+            prev.next = node2;
             node2.next = node1;
             node1.next = next;
-            prev.next = node2;
 
-            // move
             prev = node1;
             node1 = next;
         }
-
-        return dummyHead.next;
+        
+        return dummy.next;
     }
 }
 ```
@@ -259,6 +253,8 @@ class Solution {
 #### 循环交换
 
 获取curr，last 和 next
+
+包括当前节点向后取n个节点，如果成功，则最后一个节点不是null
 
 **注意子链表重新链接主链表的节点位置，画图求解**
 
@@ -537,4 +533,27 @@ class Solution {
 ```
 
 
+
+### 链表相交 - 双链表
+
++ currA 和 currB 如果没有相交
+  + 如果list1和list2长度相同，会在同时变成null，交集是null
+  + 如果list1和list2长度不同，会在走完都做完list1 + list2 的时候，同时变成null， 交集是null
++ currA 和 currB 走完 **list1和 list2公共节点 + list1的单独节点 + list2的单独节点** 相遇
+
+```JAVA
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        
+        ListNode currA = headA, currB = headB;
+        while (currA != currB) {
+
+            currA = currA == null ? headB : currA.next;
+            currB = currB == null ? headA : currB.next;
+        }
+
+        return currA;
+    }
+}
+```
 

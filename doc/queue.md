@@ -77,10 +77,13 @@ public class CircularQueue {
 
 ## 习题
 
-| 序号 | 题目               | 连接                                                         | 次数 |
-| ---- | ------------------ | ------------------------------------------------------------ | ---- |
-| 239  | 滑动窗口最大值     | https://leetcode-cn.com/problems/sliding-window-maximum      | 2    |
-| 641  | 设计循环双端队列   | https://leetcode-cn.com/problems/design-circular-deque       | 2    |
+| 序号 | 题目                                                         | 连接 |
+| ---- | ------------------------------------------------------------ | ---- |
+| 622  | [设计循环队列](https://leetcode-cn.com/problems/design-circular-queue/) | 2    |
+| 641  | [设计循环双端队列](https://leetcode-cn.com/problems/design-circular-deque/) | 2    |
+| 346  | [数据流中的移动平均值](https://leetcode-cn.com/problems/moving-average-from-data-stream/) | 2    |
+| 239  | [滑动窗口最大值](https://leetcode-cn.com/problems/sliding-window-maximum/) | 2    |
+
 
 
 ### 双端队列在Array中设计
