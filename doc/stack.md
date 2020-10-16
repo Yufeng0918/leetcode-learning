@@ -52,12 +52,12 @@
 
 ## 习题
 
-| 序号 | 题目               | 连接                                                         | 次数 |
-| ---- | ------------------ | ------------------------------------------------------------ | ---- |
-| 20   | 有效的括号         | https://leetcode-cn.com/problems/valid-parentheses/          | 2    |
-| 155  | 最小栈             | https://leetcode-cn.com/problems/min-stack/                  | 3    |
-| 84   | 柱状图中最大的矩形 | https://leetcode-cn.com/problems/largest-rectangle-in-histogram | 2    |
-| 42   | 接雨水             | https://leetcode-cn.com/problems/trapping-rain-water/        | 2    |
+| 序号 | 题目                                                         | 次数 |
+| ---- | ------------------------------------------------------------ | ---- |
+| 20   | [有效的括号](https://leetcode-cn.com/problems/valid-parentheses/) | 2    |
+| 155  | [最小栈](https://leetcode-cn.com/problems/min-stack/)        | 3    |
+| 84   | [柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/) | 3    |
+| 42   | [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) | 2    |
 
 
 
