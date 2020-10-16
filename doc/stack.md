@@ -17,7 +17,7 @@
 
 ![](../images/leetcode-32.jpg)
 
-实际上，编译器就是通过两个栈来实现的。其中一个**保存操作数的栈**，另一个是**保存运算符的栈**。我们从左向右遍历表达式，当遇到数字，我们就直接压入操作数栈；当遇到运算符，就与运算符栈的栈顶元素进行比较。
+编译器就是通过两个栈来实现的。其中一个**保存操作数的栈**，另一个是**保存运算符的栈**。我们从左向右遍历表达式，当遇到数字，我们就直接压入操作数栈；当遇到运算符，就与运算符栈的栈顶元素进行比较。
 
 + 如果比运算符栈顶元素的优先级高，就将当前运算符压入栈
 + 如果比运算符栈顶元素的优先级低或者相同，从运算符栈中取栈顶运算符，从操作数栈的栈顶取 2 个操作数，然后进行计算，再把计算完的结果压入操作数栈，继续比较。
@@ -99,8 +99,8 @@ class Solution {
 
 ### 柱状图中最大的矩形
 
-- 入栈: 当前元素如果大于上一个元素，说明上一个元素是当前元素的左边边界，可是当前元素还没有找到右边界，所以入栈
-- 出栈: 当前元素小于上一个元素，说明当前元素是上一个元素的右边边界。此时有了左边界和右边界，应该进行计算
+- 入栈: 当前元素如果大于上一个元素，**说明上一个元素是当前元素的左边边界**，可是当前元素还没有找到右边界，所以入栈
+- 出栈: 当前元素小于上一个元素，说明**当前元素是上一个元素的右边边界**。此时有了左边界和右边界，应该进行计算
 - 宽计算方法:  右边界（不包括）- 左边界（包括）- 1
 - 还在栈中的数字一定是从小到大排列，因为比当前元素小的已经被弹出栈中
 
@@ -129,7 +129,6 @@ class Solution {
             }
             stack.push(i);
         }
-
         
         int len = stack.pop() + 1;
         while (!stack.isEmpty()) {
@@ -147,4 +146,38 @@ class Solution {
 }
 ```
 
+利用前后哨兵简化代码，哨兵不会改变计算中的长和宽，所以对整体计算不会有影响
+
+````java
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+
+        if (heights.length == 0) return 0;
+        if (heights.length == 1) return heights[0];
+
+        int area = 0, height, width;
+        int[] temp = new int[heights.length + 2];
+        for(int i = 0; i < heights.length; i++) {
+            temp[i + 1] = heights[i];
+        }
+        heights = temp;
+
+        Deque<Integer> stack = new ArrayDeque<>();
+        for(int i = 0; i < heights.length; i++) {
+            if (stack.size() == 0 || heights[i] >= heights[stack.peek()]) {
+                stack.push(i);
+                continue;
+            }
+
+            while(stack.size()!= 0 && heights[i] <= heights[stack.peek()]) {
+                height = heights[stack.pop()];
+                width = stack.size() == 0 ? i : i - 1 - stack.peek();
+                area = Math.max(area, height * width);
+            }
+            stack.push(i);
+        }
+        return area;
+    }
+}
+````
 
