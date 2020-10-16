@@ -54,10 +54,19 @@
 
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 20   | [有效的括号](https://leetcode-cn.com/problems/valid-parentheses/) | 2    |
+| 20   | [有效的括号](https://leetcode-cn.com/problems/valid-parentheses/) | 3    |
+| 394  | [字符串解码](https://leetcode-cn.com/problems/decode-string/) | 2    |
 | 155  | [最小栈](https://leetcode-cn.com/problems/min-stack/)        | 3    |
+| 739  | [[每日温度](https://leetcode-cn.com/problems/daily-temperatures/)](https://leetcode-cn.com/problems/min-stack/) | 4    |
 | 84   | [柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/) | 3    |
-| 42   | [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) | 2    |
+| 42   | [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) | 3    |
+
+### 常用技巧
+
++ 单调栈，递减单调还是递增单调
++ 确定左边界和右边界
++ 左边界：pop当前元素，而peek() + 1则为左边界
++ 右边界：需要pop当前元素，则是有边界
 
 
 
@@ -180,4 +189,39 @@ class Solution {
     }
 }
 ````
+
+
+
+### 接雨水
+
++ 左边界：当前pop以后，栈顶元素 + 1
++ 有边界：大于当前栈顶元素
+
+```JAVA
+class Solution {
+    public int trap(int[] height) {
+
+        if (height.length == 0 || height.length == 1) return 0;
+
+        int area = 0, h, w;
+        Deque<Integer> stack = new ArrayDeque<>();
+        for(int i = 0; i < height.length; i++) {
+            if (stack.size() == 0 || height[i] <= height[stack.peek()]) {
+                stack.push(i);
+                continue;
+            }
+
+            while(stack.size() != 0 && height[i] > height[stack.peek()]) {
+                h = height[stack.pop()];
+                if (stack.size() == 0) continue;
+                h = Math.min(height[stack.peek()], height[i]) - h;
+                w = i - stack.peek() - 1;
+                area = area + h * w;
+            }
+            stack.push(i);
+        }
+        return area;
+    }
+}
+```
 
