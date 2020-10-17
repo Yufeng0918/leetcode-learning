@@ -57,7 +57,7 @@
 | 20   | [有效的括号](https://leetcode-cn.com/problems/valid-parentheses/) | 3    |
 | 394  | [字符串解码](https://leetcode-cn.com/problems/decode-string/) | 2    |
 | 155  | [最小栈](https://leetcode-cn.com/problems/min-stack/)        | 3    |
-| 739  | [[每日温度](https://leetcode-cn.com/problems/daily-temperatures/)](https://leetcode-cn.com/problems/min-stack/) | 4    |
+| 739  | [每日温度](https://leetcode-cn.com/problems/daily-temperatures/) | 4    |
 | 84   | [柱状图中最大的矩形](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/) | 3    |
 | 42   | [接雨水](https://leetcode-cn.com/problems/trapping-rain-water/) | 3    |
 
@@ -65,8 +65,9 @@
 
 + 单调栈，递减单调还是递增单调
 + 确定左边界和右边界
-+ 左边界：pop当前元素，而peek() + 1则为左边界
-+ 右边界：需要pop当前元素，则是有边界
++ 左边界：栈顶元素是左边界
++ 右边界：等待入栈当前元素，则是右边界
++ **所有元素入栈以后，栈中元素是否需要处理，如果需要处理是否可以用哨兵。**
 
 
 
@@ -108,9 +109,12 @@ class Solution {
 
 ### 柱状图中最大的矩形
 
-- 入栈: 当前元素如果大于上一个元素，**说明上一个元素是当前元素的左边边界**，可是当前元素还没有找到右边界，所以入栈
-- 出栈: 当前元素小于上一个元素，说明**当前元素是上一个元素的右边边界**。此时有了左边界和右边界，应该进行计算
-- 宽计算方法:  右边界（不包括）- 左边界（包括）- 1
+- **单调递增栈**
+- **入栈**: 当前元素大于栈顶元素，**栈顶元素是当前元素的左边界**，可是当前元素还没有找到右边界，所以入栈
+- **出栈**: 当前元素小于栈顶元素，**当前元素是栈顶元素的右边界 + 1**。此时有了左边界和右边界，应该出栈计算
+- 宽计算方法
+  - 栈不为空：右边界（不包括）- 左边界（包括）- 1
+  - 栈为空：左边界是-1位置，右边界 + 1
 - 还在栈中的数字一定是从小到大排列，因为比当前元素小的已经被弹出栈中
 
 ```java
@@ -163,27 +167,22 @@ class Solution {
 
         if (heights.length == 0) return 0;
         if (heights.length == 1) return heights[0];
-
-        int area = 0, height, width;
+        
         int[] temp = new int[heights.length + 2];
         for(int i = 0; i < heights.length; i++) {
             temp[i + 1] = heights[i];
         }
         heights = temp;
-
-        Deque<Integer> stack = new ArrayDeque<>();
+        Deque<Integer> s = new ArrayDeque<>();
+        int area = 0, h, w;
         for(int i = 0; i < heights.length; i++) {
-            if (stack.size() == 0 || heights[i] >= heights[stack.peek()]) {
-                stack.push(i);
-                continue;
+            
+            while(s.size() != 0 && heights[i] < heights[s.peek()]) {
+                h = heights[s.pop()];
+                w = s.size() == 0 ? i : i - s.peek() - 1;
+                area = Math.max(area, h * w);
             }
-
-            while(stack.size()!= 0 && heights[i] <= heights[stack.peek()]) {
-                height = heights[stack.pop()];
-                width = stack.size() == 0 ? i : i - 1 - stack.peek();
-                area = Math.max(area, height * width);
-            }
-            stack.push(i);
+            s.push(i);
         }
         return area;
     }
@@ -194,6 +193,7 @@ class Solution {
 
 ### 接雨水
 
++ 单调递减栈
 + 左边界：当前pop以后，栈顶元素 + 1
 + 有边界：大于当前栈顶元素
 

@@ -79,8 +79,7 @@ public class CircularQueue {
 
 | 序号 | 题目                                                         | 连接 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 622  | [设计循环队列](https://leetcode-cn.com/problems/design-circular-queue/) | 2    |
-| 641  | [设计循环双端队列](https://leetcode-cn.com/problems/design-circular-deque/) | 2    |
+| 641  | [设计循环双端队列](https://leetcode-cn.com/problems/design-circular-deque/) | 3    |
 | 346  | [数据流中的移动平均值](https://leetcode-cn.com/problems/moving-average-from-data-stream/) | 2    |
 | 239  | [滑动窗口最大值](https://leetcode-cn.com/problems/sliding-window-maximum/) | 2    |
 
@@ -95,77 +94,103 @@ public class CircularQueue {
 - 往后移动 (index + 1 + capacity) % capacity
 
 ```java
-**class MyCircularDeque {
+class MyCircularDeque {
 
     /** Initialize your data structure here. Set the size of the deque to be k. */
     int[] arr;
-    int front;
-    int rear;
-    int capacity;
+    int head, tail;
     public MyCircularDeque(int k) {
-        capacity = k + 1;
-        arr = new int[capacity];
-        front = 0;
-        rear = 0;
-        
+        arr = new int[k + 1];
+        head = 0;
+        tail = 0;
     }
     
     /** Adds an item at the front of Deque. Return true if the operation is successful. */
     public boolean insertFront(int value) {
         if (isFull()) return false;
-        
-        front = (front - 1 + capacity) % capacity;
-        arr[front] = value;
-        return true; 
+        arr[(head - 1 + arr.length) % arr.length] = value;
+        head = (head - 1 + arr.length) % arr.length;
+        return true;
     }
     
     /** Adds an item at the rear of Deque. Return true if the operation is successful. */
     public boolean insertLast(int value) {
         if (isFull()) return false;
-
-        arr[rear] = value;
-        rear = (rear + 1) % capacity;
+        arr[tail] = value;
+        tail = (tail + 1) % arr.length;
         return true;
     }
     
     /** Deletes an item from the front of Deque. Return true if the operation is successful. */
     public boolean deleteFront() {
         if (isEmpty()) return false;
-            
-        front = (front + 1) % capacity;
+        head = (head + 1) % arr.length;
         return true;
     }
     
     /** Deletes an item from the rear of Deque. Return true if the operation is successful. */
     public boolean deleteLast() {
         if (isEmpty()) return false;
-
-        rear = (rear - 1 + capacity) % capacity;
+        tail = (tail - 1 + arr.length) % arr.length;
         return true;
     }
     
     /** Get the front item from the deque. */
     public int getFront() {
         if (isEmpty()) return -1;
-
-        return arr[front];
+        return arr[head];
     }
     
     /** Get the last item from the deque. */
     public int getRear() {
         if (isEmpty()) return -1;
-
-        return arr[(rear - 1 + capacity) % capacity];
+        return arr[(tail - 1 + arr.length) % arr.length];
     }
     
     /** Checks whether the circular deque is empty or not. */
     public boolean isEmpty() {
-        return front == rear;
+        return tail == head;
     }
     
     /** Checks whether the circular deque is full or not. */
     public boolean isFull() {
-        return (rear + 1) % capacity == front;
+        return (tail + 1) % arr.length == head;
     }
-}**
+}
 ```
+
+
+
+### 滑动窗口最大值
+
++ 确定滑动窗口在第几个元素可能溢出
++ 确定加入元素的条件
++ **单调递增还是单调递减**
+
+```java
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        
+        if (nums.length < k - 1) return new int[]{};
+
+        int[] ans = new int[nums.length - k + 1];
+        Deque<Integer> q = new ArrayDeque<>();
+        for(int i = 0; i < nums.length; i++) {
+
+            if (i >= k && q.peek() == nums[i - k]) {
+                q.removeFirst();
+            }
+
+            while(q.size() != 0 && q.getLast() < nums[i]) {
+                q.removeLast();
+            }
+            q.addLast(nums[i]);
+            if (i >= k - 1) {
+                ans[i - k + 1] = q.getFirst();
+            }
+        }
+        return ans;
+    }
+}	
+```
+
