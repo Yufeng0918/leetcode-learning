@@ -170,19 +170,72 @@ BT 下载软件文件， 对 100 个文件块分别取哈希值，并且保存�
 ## 习题
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 380  | [常数时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1/) | 1    |
-| 242  | [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/) | 2    |
-| 49   | [字母异位词分组](https://leetcode-cn.com/problems/group-anagrams/) | 2    |
-| 249  | [移位字符串分组](https://leetcode-cn.com/problems/group-shifted-strings/) | 2    |
-| 202  | [快乐数](https://leetcode-cn.com/problems/happy-number/)     | 1    |
+| 380  | [常数时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1/) | 2    |
+| 242  | [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/) | 3    |
+| 49   | [字母异位词分组](https://leetcode-cn.com/problems/group-anagrams/) | 3    |
+| 249  | [移位字符串分组](https://leetcode-cn.com/problems/group-shifted-strings/) | 3    |
+| 202  | [快乐数](https://leetcode-cn.com/problems/happy-number/)     | 2    |
 | 1    | [两数之和](https://leetcode-cn.com/problems/two-sum/)        | 2    |
-| 454  | [四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)     | 1    |
-| 424  | [替换后的最长重复字符](https://leetcode-cn.com/problems/longest-repeating-character-replacement/) | 1    |
+| 454  | [四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)     | 2    |
+| 424  | [替换后的最长重复字符](https://leetcode-cn.com/problems/longest-repeating-character-replacement/) | 2    |
 | 159  | [至多包含两个不同字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-most-two-distinct-characters/) | 2    |
 
-### 有效异位词
 
-异位词 = 相同字符串的排列
+
+### 常数时间插入、删除和获取随机元素
+
+思想：混合使用哈希集合和数组
+
++ ArrayList的删除是交换位置
++ **先交换位置，再删除**
+
+```JAVA
+class RandomizedSet {
+    /** Initialize your data structure here. */
+    List<Integer> list;
+    Map<Integer, Integer> map;
+    int i;
+    public RandomizedSet() {
+        map = new HashMap<>();
+        list = new ArrayList<>();
+        i = 0;
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    public boolean insert(int val) {
+        if (map.containsKey(val)) return false;
+        
+        list.add(val);
+        map.put(val, i++);
+        return true;
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    public boolean remove(int val) {
+        if (!map.containsKey(val)) return false;
+        i--;
+        int idx = map.get(val);
+        map.put(list.get(i), idx);
+        map.remove(val);
+        list.set(idx, list.get(i));
+        list.remove(i);
+        return true;
+    }
+    
+    /** Get a random element from the set. */
+    public int getRandom() {
+        Random r = new Random();
+        int idx = r.nextInt(i);
+        return list.get(idx);
+    }
+}
+```
+
+
+
+### 有效异位词 - 哈希表
+
+思想：利用数组来替代哈希表
 
 + 排序
 + 哈希映射记录每个字符的次数
@@ -191,69 +244,101 @@ BT 下载软件文件， 对 100 个文件块分别取哈希值，并且保存�
 class Solution {
     public boolean isAnagram(String s, String t) {
 
-        if (s == null && t == null) return true;
-
         if (s.length() != t.length()) return false;
+        if (s.length() == 0 || t.length() == 0) return true;
         
-        Map<Character, Integer> map1 = new HashMap<>();
-        for(Character c: s.toCharArray()) {
-            putIntoMap(map1, c);
+        int[] arr = new int[26];
+        char[] sArr = s.toCharArray();
+        char[] tArr = t.toCharArray();
+        for(int i = 0; i < s.length(); i++) {
+            arr[sArr[i] - 'a']++;
+            arr[tArr[i] - 'a']--;
         }
 
-        Map<Character, Integer> map2 = new HashMap<>();
-        for(Character c: t.toCharArray()) {
-            putIntoMap(map2, c);
+        for(int i = 0; i < arr.length; i++) {
+            if (arr[i] != 0) return false;
         }
-
-
-        for(Character c: map1.keySet()) {
-            if (!map1.get(c).equals(map2.get(c))) return false;
-        }
-
         return true;
-    }
-
-    public static void putIntoMap(Map<Character, Integer> map, Character c) {
-
-        if (map.containsKey(c)) {
-            map.put(c, map.get(c) + 1);
-        } else {
-            map.put(c, 1);
-        }
     }
 }
 ```
 
 
 
-### 字母异位词分组
+### 字母异位词分组 - 哈希键
 
-利用异位词分组是异位词排序以后字符串相投
+思想：利用异位词分组是异位词排序以后**字符串相投作为哈希键**
 
 ```java
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
+        
+        if (strs.length == 0) return new ArrayList<>();
 
         Map<String, List<String>> map = new HashMap<>();
-        List<List<String>> result = new LinkedList<>();
-
-        for(int i = 0; i < strs.length; i++) {
-            String str = strs[i];
-            char[] chars = str.toCharArray();
+        char[] chars;
+        String key;
+        List<String> list;
+        for(String str: strs) {
+            chars = str.toCharArray();
             Arrays.sort(chars);
-            String sorted = new String(chars);
+            key = new String(chars);
+            list = map.getOrDefault(key, new ArrayList<>());
+            list.add(str);
+            map.put(key, list);
+        }
+
+        List<List<String>> ans = new LinkedList<>();
+        for(String k: map.keySet()) {
+            ans.add(map.get(k));
+        }
+        return ans;
+    }
+}
+```
+
+
+
+### 移位字符串分组 - 哈希键
+
+思想：利用**每个字符和第一个字符的差距的数字作为哈希键**
+
+注意：因为是循环，所以差距必须大于0
+
+```java
+class Solution {
+    public List<List<String>> groupStrings(String[] strings) {
+
+        if (strings.length == 0) return new ArrayList<>();
         
-            if (!map.containsKey(sorted)) {
-                map.put(sorted, new ArrayList<String>());
-            }
-            map.get(sorted).add(str);
+        Map<String, List<String>> map = new HashMap<>();
+        String key;
+        List<String> list;
+        for(String str: strings) {
+            key = getKey(str);
+            list = map.getOrDefault(key, new LinkedList<>());
+            list.add(str);
+            map.put(key, list);
         }
 
-
-        for(String key: map.keySet()) {
-            result.add(map.get(key));
+        List<List<String>> ans = new LinkedList<>();
+        for(String k: map.keySet()) {
+            ans.add(map.get(k));
         }
-        return result;
+        return ans;
+    }
+
+    public String getKey(String word) {
+        
+        StringBuilder str = new StringBuilder();
+        char[] arr = word.toCharArray();
+        int i;
+        for(char ch: arr) {
+            i = ch - arr[0];
+            str.append(i > 0 ? i : i + 26);
+            str.append(",");
+        } 
+        return str.toString();
     }
 }
 ```
@@ -262,21 +347,113 @@ class Solution {
 
 ### 两数之和
 
+思想：通过map来存储值和索引位置
+
+注意：题目中说明只有一组答案，**如果有多组答案，需要考虑元素的个数**。
+
 ```JAVA
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        
         Map<Integer, Integer> map = new HashMap<>();
+        int rest;
         for(int i = 0; i < nums.length; i++) {
-            
-            int rest = target - nums[i];
-            if (map.containsKey(rest)) {
-                return new int[]{map.get(rest), i};
-            } else {
-                map.put(nums[i], i);
-            }
+            rest = target - nums[i];
+            if (map.containsKey(rest)) return new int[] {map.get(rest), i};        
+            map.put(nums[i], i);
         }
-        return new int[2];
+        return new int[]{};
     }
 }
 ```
+
+
+
+### 四数之和
+
+思路：转化成两数之和，用map来提搜索效率
+
+```java
+class Solution {
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < A.length; i++) {
+            for(int j = 0; j < B.length; j++) {
+                map.put(A[i] + B[j], map.getOrDefault(A[i] + B[j], 0) + 1);
+            }
+        }
+
+        int sum = 0, ans = 0;
+        for(int p = 0; p < C.length; p++) {
+            for(int q = 0; q < D.length; q++) {
+                sum = -(C[p] + D[q]);
+                ans += map.getOrDefault(sum, 0);
+            }
+        }
+        return ans;
+    }
+}
+```
+
+
+
+### 替换后的最长重复字符 - 左右指针
+
+思路：
+
++ 比较现有子串的长度和**当前最多字符+k**的长度
++ 子串扩展的时候，右指针移动
++ **因为是找最大，所以左指针不需要连续移动来收缩子串**
++ **当不符合条件时，左指针移动**
+
+```JAVA
+class Solution {
+    public int characterReplacement(String s, int k) {
+
+        int[] arr = new int[26];
+        int right = 0, left = 0, max = 0, idx;
+        char[] chars = s.toCharArray();
+        for(; right < s.length(); right++) {
+            idx = chars[right] - 'A';
+            arr[idx]++;
+            max = Math.max(max, arr[idx]);
+            if (right - left + 1 > max + k) {
+                arr[chars[left] - 'A']--;
+                left++;
+            }
+        }
+        return s.length() - left;
+    }
+}
+```
+
+
+
+### 至多包含两个不同字符的最长子串 - 左右指针
+
+```java
+class Solution {
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+
+        int count = 0, right = 0, left = 0, idx, len, max = 0;
+        int[] map = new int[72];
+        char[] chars = s.toCharArray(); 
+        for(; right < s.length(); right++) {
+            idx = chars[right] - 'A';
+            if (map[idx] == 0) count++;
+            map[idx]++;
+
+            while(count > 2) {
+                idx = chars[left] - 'A';
+                map[idx]--;
+                if (map[idx] == 0) count--;
+                left++;
+            }
+            len = right - left + 1;
+            max = Math.max(max, len);
+        }
+        return max;
+    }
+}
+```
+
