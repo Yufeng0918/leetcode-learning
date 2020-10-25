@@ -168,11 +168,17 @@ BT 下载软件文件， 对 100 个文件块分别取哈希值，并且保存�
 
 
 ## 习题
-| 序号 | 题目             | 连接                                                  | 次数 |
-| ---- | ---------------- | ----------------------------------------------------- | ---- |
-| 242  | 有效的字母异位词 | https://leetcode-cn.com/problems/valid-anagram/       | 2    |
-| 49   | 字母异位词分组   | https://leetcode-cn.com/problems/group-anagrams/      | 2    |
-| 1    | 两数之和         | https://leetcode-cn.com/problems/two-sum/submissions/ | 2    |
+| 序号 | 题目                                                         | 次数 |
+| ---- | ------------------------------------------------------------ | ---- |
+| 380  | [常数时间插入、删除和获取随机元素](https://leetcode-cn.com/problems/insert-delete-getrandom-o1/) | 1    |
+| 242  | [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/) | 2    |
+| 49   | [字母异位词分组](https://leetcode-cn.com/problems/group-anagrams/) | 2    |
+| 249  | [移位字符串分组](https://leetcode-cn.com/problems/group-shifted-strings/) | 2    |
+| 202  | [快乐数](https://leetcode-cn.com/problems/happy-number/)     | 1    |
+| 1    | [两数之和](https://leetcode-cn.com/problems/two-sum/)        | 2    |
+| 454  | [四数相加 II](https://leetcode-cn.com/problems/4sum-ii/)     | 1    |
+| 424  | [替换后的最长重复字符](https://leetcode-cn.com/problems/longest-repeating-character-replacement/) | 1    |
+| 159  | [至多包含两个不同字符的最长子串](https://leetcode-cn.com/problems/longest-substring-with-at-most-two-distinct-characters/) | 2    |
 
 ### 有效异位词
 
