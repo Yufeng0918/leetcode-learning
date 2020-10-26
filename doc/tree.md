@@ -252,14 +252,68 @@ n + n*(n-1) + n*(n-1)*(n-2) +... + n*(n-1)*(n-2)*...*2*1
 
 
 
+## 应用
+
+### B+ 索引
+
+#### 区间查找
+
+为了让二叉查找树支持按照区间来查找数据，我们把每个叶子节点串在一条链表上，链表中的数据是从小到大有序的。如果我们要求某个区间的数据。我们只需要拿区间的起始值，在树中进行查找，当查找到某个叶子节点之后，我们再顺着链表往后遍历，直到链表中的结点数据值大于区间的终止值为止。
+
+![](../images/leetcode-65.jpg)
+
+
+
+#### IO操作
+
+比如，我们给一亿个数据构建二叉查找树索引，那索引中会包含大约 1 亿个节点，每个节点假设占用 16 个字节，那就需要大约 1GB 的内存空间
+
+将索引存储在**硬盘中的方案**，尽管减少了内存消耗，但是在数据查找的过程中，需要读取磁盘中的索引，**因此数据查询效率就相应降低很多。**
+
+如果我们把索引构建成 m 叉树，高度是不是比二叉树要小呢？如图所示，给 16 个数据构建二叉树索引，树的高度是 4，查找一个数据，就需要 4 个磁盘 IO 操作。不管是内存中的数据，还是磁盘中的数据，操作系统都是按页（一页大小通常是 4KB，这个值可以通过 getconfig PAGE_SIZE 命令查看）来读取的。所以，**我们在选择 m 大小的时候，要尽量让每个节点的大小等于一个页的大小。读取一个节点，只需要一次磁盘 IO 操作。**
+
+![](../images/leetcode-66.jpg)
+
+#### 插入分裂
+
+这个节点的大小超过了一个页的大小，读取这样一个节点，就会导致多次磁盘 IO 操作。我们只需要将这个节点分裂成两个节点。但是，节点分裂之后，其上层父节点的子节点个数就有可能超过 m 个。不过这也没关系，我们可以用同样的方法，将父节点也分裂成两个节点。这种级联反应会从下往上，一直影响到根节点
+
+![](../images/leetcode-67.jpg)
+
+#### 删除合并
+
+我们可以设置一个阈值。在 B+ 树中，这个阈值等于 m/2。如果某个节点的子节点个数小于 m/2，我们就将它跟相邻的兄弟节点合并。不过，合并之后节点的子节点个数有可能会超过 m。针对这种情况，我们可以借助插入数据时候的处理方法，再分裂节点。
+
+![](../images/leetcode-68.jpg)
+
+
+
+### B 树
+
+B+ 树中的节点不存储数据，只是索引，而 B 树中的节点存储数据
+
+B 树中的叶子节点并不需要链表来串联。
+
+
+
 ## 习题
 
-| 序号 | 题目                           | 连接                                                         | 次数 |
-| ---- | ------------------------------ | ------------------------------------------------------------ | ---- |
-| 94   | Binary Tree Inorder Traversal  | https://leetcode-cn.com/problems/binary-tree-inorder-traversal/ | 1    |
-| 144  | Binary Tree Preorder Traversal | https://leetcode-cn.com/problems/binary-tree-preorder-traversal/ | 1    |
-| 590  | N-ary Tree Postorder Traversal | https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/ | 1    |
-| 589  | N-ary Tree Preorder Traversal] | https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/ | 1    |
+| 序号 | 题目                                                         | 次数 |
+| ---- | ------------------------------------------------------------ | ---- |
+| 94   | [二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/) | 2    |
+| 144  | [二叉树的前序遍历](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/)l | 2    |
+| 590  | [N叉树的后序遍历](https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/) | 2    |
+| 589  | [N叉树的前序遍历](https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/) | 2    |
+
+| 序号 | 题目                                                         | 次数 | 次数 |
+| ---- | ------------------------------------------------------------ | ---- | ---- |
+| 226  | 翻转二叉树                     | https://leetcode-cn.com/problems/invert-binary-tree/description/ | 3    |
+| 96   | 验证二叉搜索树                 | https://leetcode-cn.com/problems/validate-binary-search-tree/ | 2    |
+| 104  | 二叉树的最大深度               | https://leetcode-cn.com/problems/maximum-depth-of-binary-tree | 2    |
+| 111  | 二叉树的最小深度               | https://leetcode-cn.com/problems/minimum-depth-of-binary-tree | 2    |
+| 297  | 二叉树的序列化与反序列化       | https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/ | 2    |
+| 236  | 二叉树的最近公共祖先           | https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ | 2    |
+| 105  | 从前序与中序遍历序列构造二叉树 | https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/ | 1    |
 
 
 
