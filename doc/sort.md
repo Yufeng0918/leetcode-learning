@@ -1,16 +1,5 @@
 # 排序
 
-| 序号 | 题目次数                                                     | 次数 |
-| ---- | ------------------------------------------------------------ | ---- |
-| 1122 | [数组的相对排序](https://leetcode-cn.com/problems/relative-sort-array/) | 1    |
-| 242  | [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/) | 2    |
-| 56   | [合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 1    |
-| 1244 | [力扣排行榜](https://leetcode-cn.com/problems/design-a-leaderboard/) | 1    |
-| 493  | [ 翻转对](https://leetcode-cn.com/problems/reverse-pairs/)   |      |
-|      |                                                              |      |
-|      |                                                              |      |
-
-
 
 ## 概述
 
@@ -68,8 +57,6 @@
 
 
 
-
-
 ### 插入排序
 
 将数组中的数据分为两个区间，**已排序区间和未排序区间**。插入算法的核心思想是取未排序区间中的元素，在已排序区间中找到合适的插入位置将其插入，并保证已排序区间数据一直有序。
@@ -91,8 +78,6 @@
        }
     }
 ```
-
-
 
 
 
@@ -204,3 +189,14 @@
 统计数组中每个值为i的元素出现的次数，存入数组C的第i项， 对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）；
 
 反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1。
+
+
+## 习题
+
+| 序号 | 题目次数                                                     | 次数 |
+| ---- | ------------------------------------------------------------ | ---- |
+| 1122 | [数组的相对排序](https://leetcode-cn.com/problems/relative-sort-array/) | 1    |
+| 242  | [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/) | 2    |
+| 56   | [合并区间](https://leetcode-cn.com/problems/merge-intervals/) | 1    |
+| 1244 | [力扣排行榜](https://leetcode-cn.com/problems/design-a-leaderboard/) | 1    |
+| 493  | [ 翻转对](https://leetcode-cn.com/problems/reverse-pairs/)   | 1    |

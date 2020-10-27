@@ -2,7 +2,7 @@
 
 ![](./images/leetcode-00.jpg)
 
-## Deliberate Practcing
+## 0. Deliberate Practcing
 
 #### 反复练习，五毒神掌
 
@@ -81,4 +81,8 @@
 
 
 ## [14. 字符串](./doc/pattern.md)
+
+
+
+## [15. 平衡二叉树](./doc/balance-tree.md)
 

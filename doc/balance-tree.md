@@ -140,3 +140,5 @@ public class com.yufeng.data.structure.AVLTree<T extends Comparable<T>> {
 + 每个红色节点必须有两个黑色的子节点。（从每个叶子到根的所有路径上不能有两个连续的红色节点。）
 
 + 从任一节点到其每个叶子的所有简单路径道路都包含相同数目的黑色节点。
+
+![](../images/leetcode-64.jpg)
