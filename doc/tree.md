@@ -304,16 +304,16 @@ B 树中的叶子节点并不需要链表来串联。
 | 144  | [二叉树的前序遍历](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/)l | 2    |
 | 590  | [N叉树的后序遍历](https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/) | 2    |
 | 589  | [N叉树的前序遍历](https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/) | 2    |
+| 226  | [翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/) | 3    |
+| 96   | [验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/) | 2    |
+| 104  | [二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/) | 2    |
+| 111  | [二叉树的最小深度](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/) | 2    |
+| 297  | [二叉树的序列化与反序列化](https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/) | 2    |
+| 236  | [二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/) | 2    |
+| 105  | [从前序与中序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | 1    |
+| 106  | [从中序与后序遍历序列构造二叉树](https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/) | 1    |
+| 117  | [填充每个节点的下一个右侧节点指针 II](https://leetcode-cn.com/problems/populating-next-right-pointers-in-each-node-ii/) | 1    |
 
-| 序号 | 题目                                                         | 次数 | 次数 |
-| ---- | ------------------------------------------------------------ | ---- | ---- |
-| 226  | 翻转二叉树                     | https://leetcode-cn.com/problems/invert-binary-tree/description/ | 3    |
-| 96   | 验证二叉搜索树                 | https://leetcode-cn.com/problems/validate-binary-search-tree/ | 2    |
-| 104  | 二叉树的最大深度               | https://leetcode-cn.com/problems/maximum-depth-of-binary-tree | 2    |
-| 111  | 二叉树的最小深度               | https://leetcode-cn.com/problems/minimum-depth-of-binary-tree | 2    |
-| 297  | 二叉树的序列化与反序列化       | https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/ | 2    |
-| 236  | 二叉树的最近公共祖先           | https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ | 2    |
-| 105  | 从前序与中序遍历序列构造二叉树 | https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/ | 1    |
 
 
 
