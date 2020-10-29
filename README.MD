@@ -44,45 +44,50 @@
 
 
 
-## [5. 树](./doc/tree.md)/[字典树](./doc/trie-tree.md)
+## [5. 树](./doc/tree.md)
 
 
 
-## [6. 递归](./doc/recursion.md)
+## [6. 平衡树](./doc/balance-tree.md)
 
 
 
-## [7. 深度/广度优先搜索](doc/dbfs.md)
+## [7. 字典树](./doc/trie-tree.md)
 
 
 
-## [8. 贪心算法](./doc/greedy.md)
+## [8. 递归](./doc/recursion.md)
 
 
 
-## [9. 二分查找](./doc/search.md)
+## [9. 深度/广度优先搜索](doc/dbfs.md)
 
 
 
-## [10. 动态规划](./doc/dp.md)
+## [10. 贪心算法](./doc/greedy.md)
 
 
 
-## [11. 并查集](./doc/dp.md)
+## [11. 二分查找](./doc/search.md)
 
 
 
-## [12. 位运算](./doc/bit.md)
+## [12. 动态规划](./doc/dp.md)
 
 
 
-## [13. 排序](./doc/sort.md)
+## [13. 并查集](./doc/dp.md)
 
 
 
-## [14. 字符串](./doc/pattern.md)
+## [14. 位运算](./doc/bit.md)
 
 
 
-## [15. 平衡二叉树](./doc/balance-tree.md)
+## [15. 排序](./doc/sort.md)
+
+
+
+## [16. 字符串](./doc/pattern.md)
+
 
