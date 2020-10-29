@@ -52,42 +52,44 @@
 
 
 
-## [7. 字典树](./doc/trie-tree.md)
+## [7. 堆](./doc/heap.md)
 
 
 
-## [8. 递归](./doc/recursion.md)
+## [8. 字典树](./doc/trie-tree.md)
 
 
 
-## [9. 深度/广度优先搜索](doc/dbfs.md)
+## [9. 递归](./doc/recursion.md)
 
 
 
-## [10. 贪心算法](./doc/greedy.md)
+## [10. 深度/广度优先搜索](doc/dbfs.md)
 
 
 
-## [11. 二分查找](./doc/search.md)
+## [11. 贪心算法](./doc/greedy.md)
 
 
 
-## [12. 动态规划](./doc/dp.md)
+## [12. 二分查找](./doc/search.md)
 
 
 
-## [13. 并查集](./doc/dp.md)
+## [13. 动态规划](./doc/dp.md)
 
 
 
-## [14. 位运算](./doc/bit.md)
+## [14. 并查集](./doc/dp.md)
 
 
 
-## [15. 排序](./doc/sort.md)
+## [15. 位运算](./doc/bit.md)
 
 
 
-## [16. 字符串](./doc/pattern.md)
+## [16. 排序](./doc/sort.md)
 
 
+
+## [17. 字符串](./doc/pattern.md)
