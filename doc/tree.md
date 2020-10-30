@@ -300,13 +300,13 @@ B 树中的叶子节点并不需要链表来串联。
 
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 94   | [二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/) | 2    |
-| 144  | [二叉树的前序遍历](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/) | 2    |
-| 590  | [N叉树的后序遍历](https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/) | 2    |
-| 589  | [N叉树的前序遍历](https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/) | 2    |
+| 94   | [二叉树的中序遍历](https://leetcode-cn.com/problems/binary-tree-inorder-traversal/) | 3    |
+| 144  | [二叉树的前序遍历](https://leetcode-cn.com/problems/binary-tree-preorder-traversal/) | 3    |
+| 590  | [N叉树的后序遍历](https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/) | 3    |
+| 589  | [N叉树的前序遍历](https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal/) | 3    |
 | 226  | [翻转二叉树](https://leetcode-cn.com/problems/invert-binary-tree/) | 3    |
-| 96   | [验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/) | 2    |
-| 104  | [二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/) | 2    |
+| 96   | [验证二叉搜索树](https://leetcode-cn.com/problems/validate-binary-search-tree/) | 3    |
+| 104  | [二叉树的最大深度](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/) | 3    |
 | 111  | [二叉树的最小深度](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/) | 2    |
 | 297  | [二叉树的序列化与反序列化](https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree/) | 2    |
 | 236  | [二叉树的最近公共祖先](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/) | 2    |
