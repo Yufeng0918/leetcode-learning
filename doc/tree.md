@@ -317,4 +317,94 @@ B 树中的叶子节点并不需要链表来串联。
 
 
 
+### 二叉树的最近公共祖先
+
++ 情况1：q是p的父节点或者p是q是父节点，那么**父节点会早被遍历到，可以直接返回，不需要继续往下遍历**
++ 情况2：如果left和right同时被找到，那么此节点就是公共节点
++ 情况3：只有left或者right被找到，当前节点也不等于q或者p的值，那么返回left或者right即可
+
+```JAVA
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        
+        if (root == null || root.val == q.val || root.val == p.val) return root;
+
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        if (left == null)
+        return right;
+
+        if(right == null)
+        return lef
+
+        return root;
+    }
+}
+```
+
+
+
+### 从中序与后序遍历序列构造二叉树
+
+```JAVA
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if (inorder.length == 0 || postorder.length == 0) return null;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+    
+        return build(map, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+    }
+
+    private TreeNode build(Map<Integer, Integer> map, int l, int r, int[] postorder, int lo, int hi) {
+
+        if (l > r) return null;
+        
+        int val = Integer.valueOf(postorder[hi]);
+        TreeNode node = new TreeNode(val);
+        int idx = map.get(val);
+        int len = idx - l;
+        node.left = build(map, l, idx - 1, postorder, lo, lo + len - 1);
+        node.right = build(map, idx + 1, r, postorder, lo + len, hi - 1);
+        return node;
+    }
+
+}
+```
+
+
+
+### 从前序与中序遍历序列构造二叉树
+
+```JAVA
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (inorder.length == 0 || preorder.length == 0) return null;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+    
+        return build(map, 0, inorder.length - 1, preorder, 0, preorder.length - 1);
+
+    }
+
+    private TreeNode build(Map<Integer, Integer> map, int l, int r, int[] preorder, int lo, int hi) {
+
+        if (l > r) return null;
+        
+        int val = Integer.valueOf(preorder[lo]);
+        TreeNode node = new TreeNode(val);
+        int idx = map.get(val);
+        int len = idx - l;
+        node.left = build(map, l, idx - 1, preorder, lo + 1, lo + len);
+        node.right = build(map, idx + 1, r, preorder, lo + len + 1, hi);
+        return node;
+    }
+}
+```
 
