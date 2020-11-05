@@ -8,19 +8,24 @@ import java.util.List;
 public class Solution {
 
 
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+//        System.out.println(solution.palindromePairs(new String[]{"a",""}));
+        System.out.println(solution.palindromePairs(new String[]{"abcd","dcba","lls","s","sssll", ""}));
+    }
 
     public List<List<Integer>> palindromePairs(String[] words) {
 
+        root = new Node();
         for(int i = 0; i < words.length; i++) {
             insert(words[i], i);
         }
 
+        List<List<Integer>> ans = new LinkedList<>();
         for(int i = 0; i < words.length; i++) {
-
-
+            ans.addAll(search(words, words[i], i));
         }
-
-        return new LinkedList<>();
+        return ans;
     }
 
 
@@ -28,35 +33,54 @@ public class Solution {
 
         Node node = root;
         int i = word.length() - 1;
+        List<List<Integer>> ans = new LinkedList<>();
         for(; i >= 0; i--) {
-            if (node.isEnd()) break;
+//            if (node.isEnd()) break;
+//            if (node.isEnd) {
+//                ans.addAll(getLists(words, word, idx, node, i));
+//            }
             char ch = word.charAt(i);
             if (node.containsKey(ch)) {
                 node = node.get(ch);
             } else {
-                return new LinkedList<>();
+               break;
             }
         }
 
-        List<List<Integer>> ans = new ArrayList<>();
-        if (node.isEnd() && i == -1) {
-            ans.add(Arrays.asList(node.getIdx(), idx));
-        }
+        ans.addAll(getLists(words, word, idx, node, i));
+        return ans;
+    }
 
+
+    private List<List<Integer>> getLists(String[] words, String word, int idx, Node node, int i) {
+        List<List<Integer>> ans = new ArrayList<>();
         int len;
         if (node.isEnd()) {
-            int j = node.getIdx();
-            len = words[j].length();
-            if (isPalindrome(word.substring(len))) {
-                ans.add(Arrays.asList(node.getIdx(), idx));
+            if (i == -1) {
+                if (node.getIdx() != idx) {
+                    ans.add(Arrays.asList(node.getIdx(), idx));
+                }
+            } else {
+                int j = node.getIdx();
+                len = words[j].length();
+                if (node.getIdx() != idx && isPalindrome(word.substring(0, word.length() - len))) {
+                    ans.add(Arrays.asList(node.getIdx(), idx));
+                }
             }
-        } else {
-
             List<Integer> wIdx = findWords(node);
             len = word.length();
             for (Integer q : wIdx) {
                 String str = words[q];
-                if (isPalindrome(str.substring(len))) {
+                if (len < str.length() && isPalindrome(str.substring(len)) && q != idx) {
+                    ans.add(Arrays.asList(q, idx));
+                }
+            }
+        } else {
+            List<Integer> wIdx = findWords(node);
+            len = word.length();
+            for (Integer q : wIdx) {
+                String str = words[q];
+                if (len < str.length() && isPalindrome(str.substring(len)) && q != idx) {
                     ans.add(Arrays.asList(q, idx));
                 }
             }
