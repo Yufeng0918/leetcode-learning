@@ -157,6 +157,8 @@ private void dfs(
 
 把地图抽象成图最合适不过了，把每个岔路口看作一个顶点，岔路口与岔路口之间的路看作一条边，路的长度就是边的权重。如果路是单行道，我们就在两个顶点之间画一条有向边；如果路是双行道，我们就在两个顶点之间画两条方向不同的边。这样，整个地图就被抽象成一个有向有权图。
 
+#### Dijkstra 算法
+
 我们用 vertexes 数组，记录从起始顶点到每个顶点的距离（dist）。起初，我们把所有顶点的 dist 都初始化为无穷大（也就是代码中的 Integer.MAX_VALUE）。我们把起始顶点的 dist 值初始化为 0，然后将其放到优先级队列中。
 
 **我们从优先级队列中取出 dist 最小的顶点 minVertex，然后考察这个顶点可达的所有顶点（代码中的 nextVertex）**。如果 minVertex 的 dist 值加上 minVertex 与 nextVertex 之间边的权重 w 小于 nextVertex 当前的 dist 值，也就是说，存在另一条更短的路径，它经过 minVertex 到达 nextVertex。那我们就把 nextVertex 的 dist 更新为 minVertex 的 dist 值加上 w。然后，我们把 nextVertex 加入到优先级队列中。重复这个过程，直到找到终止顶点 t 或者队列为空。
@@ -256,3 +258,63 @@ private void print(int s, int t, int[] predecessor) {
 }
 ```
 
+
+
+#### A* 算法
+
+Dijkstra 算法有点儿类似 BFS 算法，它每次找到跟起点最近的顶点，往外扩展。这种往外扩展的思路，其实有些盲目
+
+![](../images/leetcode-108.jpg)
+
+在 Dijkstra 算法的实现思路中，我们用一个优先级队列，来记录已经遍历到的顶点以及这个顶点与起点的路径长度。顶点与起点路径长度越小，就越先被从优先级队列中取出来扩展，尽管我们找的是从 s 到 t 的路线，**但是最先被搜索到的顶点依次是 1，2，3**。这个搜索方向跟我们**期望的路线方向是反着的，路线搜索的方向明显“跑偏”了。**
+
+**我们可以通过欧几里得距离，来近似地估计这个顶点跟终点的路径长度**。我们把这个距离记作 h(i)（i 表示这个顶点的编号），专业的叫法是启发函数（heuristic function）。**因为欧几里得距离的计算公式，会涉及比较耗时的开根号计算，所以，我们一般通过另外一个更加简单的距离计算公式，那就是曼哈顿距离（Manhattan distance）**
+
+```JAVA
+int hManhattan(Vertex v1, Vertex v2) { // Vertex表示顶点，后面有定义
+  return Math.abs(v1.x - v2.x) + Math.abs(v1.y - v2.y);
+}
+```
+
+原来只是单纯地通过顶点与起点之间的路径长度 g(i)，来判断谁先出队列，现在有了顶点到终点的路径长度估计值，我们通过两者之和 f(i)=g(i)+h(i)，来判断哪个顶点该最先出队列。综合两部分，我们就能有效避免刚刚讲的“跑偏”。**这里 f(i) 的专业叫法是估价函数（evaluation function）。**
+
+```JAVA
+public void astar(int s, int t) { // 从顶点s到顶点t的路径
+  int[] predecessor = new int[this.v]; // 用来还原路径
+  // 按照vertex的f值构建的小顶堆，而不是按照dist
+  PriorityQueue queue = new PriorityQueue(this.v);
+  boolean[] inqueue = new boolean[this.v]; // 标记是否进入过队列
+  vertexes[s].dist = 0;
+  vertexes[s].f = 0;
+  queue.add(vertexes[s]);
+  inqueue[s] = true;
+  while (!queue.isEmpty()) {
+    Vertex minVertex = queue.poll(); // 取堆顶元素并删除
+    for (int i = 0; i < adj[minVertex.id].size(); ++i) {
+      Edge e = adj[minVertex.id].get(i); // 取出一条minVetex相连的边
+      Vertex nextVertex = vertexes[e.tid]; // minVertex-->nextVertex
+      if (minVertex.dist + e.w < nextVertex.dist) { // 更新next的dist,f
+        nextVertex.dist = minVertex.dist + e.w;
+        nextVertex.f 
+           = nextVertex.dist+hManhattan(nextVertex, vertexes[t]);
+        predecessor[nextVertex.id] = minVertex.id;
+        if (inqueue[nextVertex.id] == true) {
+          queue.update(nextVertex);
+        } else {
+          queue.add(nextVertex);
+          inqueue[nextVertex.id] = true;
+        }
+      }
+      if (nextVertex.id == t) { // 只要到达t就可以结束while了
+        queue.clear(); // 清空queue，才能推出while循环
+        break; 
+      }
+    }
+  }
+  // 输出路径
+  System.out.print(s);
+  print(s, t, predecessor); // print函数请参看Dijkstra算法的实现
+}
+```
+
+对于 A* 算法来说，一旦遍历到终点，我们就结束 while 循环，这个时候，**终点的 dist 值未必是最小值。A*** 算法利用贪心算法的思路，每次都找 f 值最小的顶点出队列，**一旦搜索到终点就不在继续考察其他顶点和路线了。所以，它并没有考察所有的路线，也就不可能找出最短路径了。**
