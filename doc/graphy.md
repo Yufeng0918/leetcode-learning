@@ -44,7 +44,9 @@
 
 
 
-## 微博实例
+## 应用
+
+### 微博实例
 
 针对微博用户关系，假设我们需要支持下面这样几个操作：
 
@@ -67,3 +69,190 @@
 ![](../images/leetcode-94.jpg)
 
 ![](../images/leetcode-95.jpg)
+
+
+
+### 拓扑排序
+
+一个完整的项目往往会包含很多代码源文件。编译器在编译整个项目的时候，需要按照依赖关系，依次编译每个源文件。比如，A.cpp 依赖 B.cpp，那在编译的时候，编译器需要先编译 B.cpp，才能编译 A.cpp
+
+编译器通过分析源文件或者程序员事先写好的编译配置文件（比如 Makefile 文件），来获取这种局部的依赖关系。
+
+![](../images/leetcode-105.jpg)
+
+#### Kahn 算法
+
+定义数据结构的时候，如果 s 需要先于 t 执行，那就添加一条 s 指向 t 的边。所以，如果某个顶点入度为 0， 也就表示，没有任何顶点必须先于这个顶点执行，那么这个顶点就可以执行了。
+
+我们先从图中，找出一个入度为 0 的顶点，将其输出到拓扑排序的结果序列中，并且把这个顶点从图中删除（**也就是把这个顶点可达的顶点的入度都减 1**）。我们循环执行上面的过程，直到所有的顶点都被输出。最后输出的序列，就是满足局部依赖关系的拓扑排序。
+
+```JAVA
+public void topoSortByKahn() {
+  int[] inDegree = new int[v]; // 统计每个顶点的入度
+  for (int i = 0; i < v; ++i) {
+    for (int j = 0; j < adj[i].size(); ++j) {
+      int w = adj[i].get(j); // i->w
+      inDegree[w]++;
+    }
+  }
+  LinkedList<Integer> queue = new LinkedList<>();
+  for (int i = 0; i < v; ++i) {
+    if (inDegree[i] == 0) queue.add(i);
+  }
+  while (!queue.isEmpty()) {
+    int i = queue.remove();
+    System.out.print("->" + i);
+    for (int j = 0; j < adj[i].size(); ++j) {
+      int k = adj[i].get(j);
+      inDegree[k]--;
+      if (inDegree[k] == 0) queue.add(k);
+    }
+  }
+}
+```
+
+#### DFS算法
+
+第一部分是通过邻接表构造逆邻接表
+
+第二部分是这个算法的核心，**也就是递归处理每个顶点。对于顶点 vertex 来说，我们先输出它可达的所有顶点，也就是说，先把它依赖的所有的顶点输出了，然后再输出自己。**
+
+```JAVA
+public void topoSortByDFS() {
+  // 先构建逆邻接表，边s->t表示，s依赖于t，t先于s
+  LinkedList<Integer> inverseAdj[] = new LinkedList[v];
+  for (int i = 0; i < v; ++i) { // 申请空间
+    inverseAdj[i] = new LinkedList<>();
+  }
+  for (int i = 0; i < v; ++i) { // 通过邻接表生成逆邻接表
+    for (int j = 0; j < adj[i].size(); ++j) {
+      int w = adj[i].get(j); // i->w
+      inverseAdj[w].add(i); // w->i
+    }
+  }
+  boolean[] visited = new boolean[v];
+  for (int i = 0; i < v; ++i) { // 深度优先遍历图
+    if (visited[i] == false) {
+      visited[i] = true;
+      dfs(i, inverseAdj, visited);
+    }
+  }
+}
+
+private void dfs(
+    int vertex, LinkedList<Integer> inverseAdj[], boolean[] visited) {
+  for (int i = 0; i < inverseAdj[vertex].size(); ++i) {
+    int w = inverseAdj[vertex].get(i);
+    if (visited[w] == true) continue;
+    visited[w] = true;
+    dfs(w, inverseAdj, visited);
+  } // 先把vertex这个顶点可达的所有顶点都打印出来之后，再打印它自己
+  System.out.print("->" + vertex);
+}
+```
+
+
+
+### 最短路径
+
+把地图抽象成图最合适不过了，把每个岔路口看作一个顶点，岔路口与岔路口之间的路看作一条边，路的长度就是边的权重。如果路是单行道，我们就在两个顶点之间画一条有向边；如果路是双行道，我们就在两个顶点之间画两条方向不同的边。这样，整个地图就被抽象成一个有向有权图。
+
+我们用 vertexes 数组，记录从起始顶点到每个顶点的距离（dist）。起初，我们把所有顶点的 dist 都初始化为无穷大（也就是代码中的 Integer.MAX_VALUE）。我们把起始顶点的 dist 值初始化为 0，然后将其放到优先级队列中。
+
+**我们从优先级队列中取出 dist 最小的顶点 minVertex，然后考察这个顶点可达的所有顶点（代码中的 nextVertex）**。如果 minVertex 的 dist 值加上 minVertex 与 nextVertex 之间边的权重 w 小于 nextVertex 当前的 dist 值，也就是说，存在另一条更短的路径，它经过 minVertex 到达 nextVertex。那我们就把 nextVertex 的 dist 更新为 minVertex 的 dist 值加上 w。然后，我们把 nextVertex 加入到优先级队列中。重复这个过程，直到找到终止顶点 t 或者队列为空。
+
+```JAVA
+public class Graph { // 有向有权图的邻接表表示
+  private LinkedList<Edge> adj[]; // 邻接表
+  private int v; // 顶点个数
+
+  public Graph(int v) {
+    this.v = v;
+    this.adj = new LinkedList[v];
+    for (int i = 0; i < v; ++i) {
+      this.adj[i] = new LinkedList<>();
+    }
+  }
+
+  public void addEdge(int s, int t, int w) { // 添加一条边
+    this.adj[s].add(new Edge(s, t, w));
+  }
+
+  private class Edge {
+    public int sid; // 边的起始顶点编号
+    public int tid; // 边的终止顶点编号
+    public int w; // 权重
+    public Edge(int sid, int tid, int w) {
+      this.sid = sid;
+      this.tid = tid;
+      this.w = w;
+    }
+  }
+  // 下面这个类是为了dijkstra实现用的
+  private class Vertex {
+    public int id; // 顶点编号ID
+    public int dist; // 从起始顶点到这个顶点的距离
+    public Vertex(int id, int dist) {
+      this.id = id;
+      this.dist = dist;
+    }
+  }
+}
+
+
+// 因为Java提供的优先级队列，没有暴露更新数据的接口，所以我们需要重新实现一个
+private class PriorityQueue { // 根据vertex.dist构建小顶堆
+  private Vertex[] nodes;
+  private int count;
+  public PriorityQueue(int v) {
+    this.nodes = new Vertex[v+1];
+    this.count = v;
+  }
+  public Vertex poll() { // TODO: 留给读者实现... }
+  public void add(Vertex vertex) { // TODO: 留给读者实现...}
+  // 更新结点的值，并且从下往上堆化，重新符合堆的定义。时间复杂度O(logn)。
+  public void update(Vertex vertex) { // TODO: 留给读者实现...} 
+  public boolean isEmpty() { // TODO: 留给读者实现...}
+}
+
+public void dijkstra(int s, int t) { // 从顶点s到顶点t的最短路径
+  int[] predecessor = new int[this.v]; // 用来还原最短路径
+  Vertex[] vertexes = new Vertex[this.v];
+  for (int i = 0; i < this.v; ++i) {
+    vertexes[i] = new Vertex(i, Integer.MAX_VALUE);
+  }
+  PriorityQueue queue = new PriorityQueue(this.v);// 小顶堆
+  boolean[] inqueue = new boolean[this.v]; // 标记是否进入过队列
+  vertexes[s].dist = 0;
+  queue.add(vertexes[s]);
+  inqueue[s] = true;
+  while (!queue.isEmpty()) {
+    Vertex minVertex= queue.poll(); // 取堆顶元素并删除
+    if (minVertex.id == t) break; // 最短路径产生了
+    for (int i = 0; i < adj[minVertex.id].size(); ++i) {
+      Edge e = adj[minVertex.id].get(i); // 取出一条minVetex相连的边
+      Vertex nextVertex = vertexes[e.tid]; // minVertex-->nextVertex
+      if (minVertex.dist + e.w < nextVertex.dist) { // 更新next的dist
+        nextVertex.dist = minVertex.dist + e.w;
+        predecessor[nextVertex.id] = minVertex.id;
+        if (inqueue[nextVertex.id] == true) {
+          queue.update(nextVertex); // 更新队列中的dist值
+        } else {
+          queue.add(nextVertex);
+          inqueue[nextVertex.id] = true;
+        }
+      }
+    }
+  }
+  // 输出最短路径
+  System.out.print(s);
+  print(s, t, predecessor);
+}
+
+private void print(int s, int t, int[] predecessor) {
+  if (s == t) return;
+  print(s, predecessor[t], predecessor);
+  System.out.print("->" + t);
+}
+```
+
