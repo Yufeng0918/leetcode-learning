@@ -1,6 +1,6 @@
 # 实践
 
-## Redis集合
+## 1. Redis集合
 
 ### 列表（list）
 
@@ -96,7 +96,7 @@ Redis 就采用有序数组，来实现集合这种数据类型
 
 
 
-## 搜索引擎
+## 2. 搜索引擎
 
 ### 搜集
 
@@ -168,3 +168,100 @@ Redis 就采用有序数组，来实现集合这种数据类型
 + 我们拿这 k 个单词编号，去 term_offset.bin 对应的散列表中，查找每个单词编号在倒排索引文件中的偏移位置。经过这个查询之后，我们得到了 k 个偏移位置。
 + 我们拿这 k 个偏移位置，去倒排索引（index.bin）中，查找 k 个单词对应的包含它的网页编号列表。经过这一步查询之后，我们得到了 k 个网页编号列表。
 
+
+
+## 3. Disruptor
+
+Disruptor 是线程之间用于消息传递的队列
+
+### 循环列表实现生产者 - 消费者
+
+```JAVA
+public class Queue {
+  private Long[] data;
+  private int size = 0, head = 0, tail = 0;
+  public Queue(int size) {
+    this.data = new Long[size];
+    this.size = size;
+  }
+
+  public boolean add(Long element) {
+    if ((tail + 1) % size == head) return false;
+    data[tail] = element;
+    tail = (tail + 1) % size;
+    return true;
+  }
+
+  public Long poll() {
+    if (head == tail) return null;
+    long ret = data[head];
+    head = (head + 1) % size;
+    return ret;
+  }
+}
+
+public class Producer {
+  private Queue queue;
+  public Producer(Queue queue) {
+    this.queue = queue;
+  }
+
+  public void produce(Long data) throws InterruptedException {
+    while (!queue.add(data)) {
+      Thread.sleep(100);
+    }
+  }
+}
+
+public class Consumer {
+  private Queue queue;
+  public Consumer(Queue queue) {
+    this.queue = queue;
+  }
+
+  public void comsume() throws InterruptedException {
+    while (true) {
+      Long data = queue.poll();
+      if (data == null) {
+        Thread.sleep(100);
+      } else {
+        // TODO:...消费数据的业务逻辑...
+      }
+    }
+  }
+}
+```
+
+### 加锁的并发“生产者 - 消费者模型
+
+在多个生产者或者多个消费者并发操作队列的情况下，刚刚的代码主要会有下面两个问题：
+
++ 多个生产者写入的数据可能会互相覆盖
++ 多个消费者可能会读取重复的数据。
+
+![](../images/leetcode-115.jpg)
+
+```JAVA
+public boolean add(Long element) {
+  if ((tail + 1) % size == head) return false;
+  data[tail] = element;
+  tail = (tail + 1) % size;
+  return true;
+}
+```
+
+从这段代码中，我们可以看到，第 3 行给 data[tail]赋值，然后第 4 行才给 tail 的值加一。赋值和 tail 加一两个操作，并非原子操作。这就会导致这样的情况发生：当线程 1 和线程 2 同时执行 add() 函数的时候，线程 1 先执行完了第 3 行语句，将 data[7]（tail 等于 7）的值设置为 12。在线程 1 还未执行到第 4 行语句之前，也就是还未将 tail 加一之前，线程 2 执行了第 3 行语句，又将 data[7]的值设置为 15，也就是说，那线程 2 插入的数据覆盖了线程 1 插入的数据。原本应该插入两个数据（12 和 15）的，现在只插入了一个数据（15）。
+
+![](../images/leetcode-116.jpg)
+
+最简单的处理方法就是给这段代码加锁，同一时间只允许一个线程执行 add() 函数。这就相当于将这段代码的执行，由并行改成了串行，也就不存在我们刚刚说的问题了。
+
+
+
+### 无锁的并发“生产者 - 消费者模型
+
+生产者来说，它往队列中添加数据之前，先申请可用空闲存储单元，并且是批量地申请连续的 n 个（n≥1）存储单元。当申请到这组连续的存储单元之后，后续往队列中添加元素，就可以不用加锁了，**因为这组存储单元是这个线程独享的。申请存储单元的过程是需要加锁的。**
+
+对于消费者来说，处理的过程跟生产者是类似的。它先去申请一批连续可读的存储单元，**当申请到这批存储单元之后，后续的读取操作就可以不用加锁了。**
+
+![](../images/leetcode-117.jpg)
