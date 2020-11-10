@@ -12,8 +12,17 @@ public class Solution {
         Solution solution = new Solution();
 //        System.out.println(solution.palindromePairs(new String[]{"a",""}));
 //        System.out.println(solution.palindromePairs(new String[]{"abcd","dcba","lls","s","sssll", ""}));
-        System.out.println(solution.palindromePairs(new String[]{"abababb","ccaacab","ccbcbbb","","bbc","cca","abcbbba","bcccaac","bab","caacca"}));
+//        System.out.println(solution.palindromePairs(new String[]{"abababb","ccaacab","ccbcbbb","","bbc","cca","abcbbba","bcccaac","bab","caacca"}));
+
+        List<List<Integer>> a = new LinkedList<>();
+        List<Integer> l1 = new LinkedList<>();
+        l1.add(1);
+        l1.add(2);
+        a.add(l1);
+        l1.remove(1);
+        System.out.println(a.get(0).size());
     }
+
 
     public List<List<Integer>> palindromePairs(String[] words) {
 

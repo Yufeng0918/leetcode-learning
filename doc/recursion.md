@@ -282,7 +282,7 @@ private static int divide_conquer(Problem problem, ) {
 | ---- | ------------------ | ------------------------------------------------------------ | ---- |
 | 70   | 爬楼梯             | https://leetcode-cn.com/problems/climbing-stairs/            | 3    |
 | 22   | 括号生成           | https://leetcode-cn.com/problems/generate-parentheses/       | 3    |
-| 77   | 组合               | https://leetcode-cn.com/problems/combinations/               | 1    |
+| 77   | 组合               | https://leetcode-cn.com/problems/combinations/               | 2    |
 | 46   | 全排列             | https://leetcode-cn.com/problems/permutations/               | 1    |
 | 47   | 全排列 II          | https://leetcode-cn.com/problems/permutations-ii/            | 1    |
 | 50   | Pow(x, n)          | https://leetcode-cn.com/problems/powx-n/                     | 1    |
