@@ -281,14 +281,14 @@ private static int divide_conquer(Problem problem, ) {
 | 序号 | 题目               | 连接                                                         | 次数 |
 | ---- | ------------------ | ------------------------------------------------------------ | ---- |
 | 70   | 爬楼梯             | https://leetcode-cn.com/problems/climbing-stairs/            | 3    |
-| 22   | 括号生成           | https://leetcode-cn.com/problems/generate-parentheses/       | 2    |
+| 22   | 括号生成           | https://leetcode-cn.com/problems/generate-parentheses/       | 3    |
 | 77   | 组合               | https://leetcode-cn.com/problems/combinations/               | 1    |
 | 46   | 全排列             | https://leetcode-cn.com/problems/permutations/               | 1    |
 | 47   | 全排列 II          | https://leetcode-cn.com/problems/permutations-ii/            | 1    |
 | 50   | Pow(x, n)          | https://leetcode-cn.com/problems/powx-n/                     | 1    |
 | 78   | 子集               | https://leetcode-cn.com/problems/subsets/                    | 1    |
 | 169  | 多数元素           | https://leetcode-cn.com/problems/majority-element/description/ | 1    |
-| 17   | 电话号码的字母组合 | https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/ | 1    |
+| 17   | 电话号码的字母组合 | https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/ | 3    |
 | 51   | N皇后              | https://leetcode-cn.com/problems/n-queens/                   | 1    |
 
 
@@ -306,7 +306,7 @@ private static int divide_conquer(Problem problem, ) {
 
 ```JAVA
 class Solution {
-
+    
     List<String> ans = new LinkedList<>();
     public List<String> generateParenthesis(int n) {
         generate(n, n, "");
@@ -316,12 +316,58 @@ class Solution {
     public void generate(int l, int r, String prev) {
         if (l == 0 && r == 0) {
             ans.add(prev);
+            return;
         } 
-
+       
         if (l > 0) generate(l - 1, r, prev + "(");
         if (l < r && r > 0)   generate(l, r - 1, prev + ")");
     }
 }
 ```
 
+
+
+### 电话号码的字母组合
+
+**终止条件**：当走到最后一位数字
+
+**分叉条件**： 数字对应的每个字母
+
+```JAVA
+class Solution {
+
+    Map<Character, String> map = new HashMap<>();
+    List<String> ans = new LinkedList<>();
+
+    public List<String> letterCombinations(String digits) {
+
+        if (digits == null || digits.length() == 0) return ans;
+       
+        map.put('2', "abc");
+        map.put('3', "def");
+        map.put('4', "ghi");
+        map.put('5', "jkl");
+        map.put('6', "mno");
+        map.put('7', "pqrs");
+        map.put('8', "tuv");
+        map.put('9', "wxyz");
+        generate(digits, 0, ""); 
+        return ans;
+    }
+
+    public void generate(String digits, int idx, String prev) {
+        if (idx == digits.length()) {
+            ans.add(prev);
+            return;
+        }
+
+        char c = digits.charAt(idx);
+        String str = map.get(c);
+        for(int i = 0; i < str.length(); i++) {
+            String letter = str.substring(i,i+1);
+            generate(digits, idx + 1, prev + letter);
+        }
+    }
+}
+```
 
