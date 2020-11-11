@@ -1,5 +1,7 @@
 # 动态规划
 
+
+
 ## 概述
 
 动态规划比较适合用来求解最优问题，比如求最大值、最小值等等。它可以非常显著地降低时间复杂度，提高代码的执行效率。
@@ -147,6 +149,123 @@ public void minDistBT(int i, int j, int dist, int[][] w, int n) {
 
 
 
+### 编辑距离
+
+这个问题是求把一个字符串变成另一个字符串，需要的最少编辑次数。整个求解过程，涉及多个决策阶段，我们需要依次考察一个字符串中的每个字符，跟另一个字符串中的字符是否匹配，匹配的话如何处理，不匹配的话又如何处理。所以，**这个问题符合多阶段决策最优解模型。**
+
+回溯是一个递归处理的过程。如果 a[i]与 b[j]匹配，我们递归考察 a[i+1]和 b[j+1]。如果 a[i]与 b[j]不匹配，那我们有多种处理方式可选：
+
++ 可以删除 a[i]，然后递归考察 a[i+1]和 b[j]
++ 可以删除 b[j]，然后递归考察 a[i]和 b[j+1]
++ 可以在 a[i]前面添加一个跟 b[j]相同的字符，然后递归考察 a[i]和 b[j+1]
++ 可以在 b[j]前面添加一个跟 a[i]相同的字符，然后递归考察 a[i+1]和 b[j]
++ 可以将 a[i]替换成 b[j]，或者将 b[j]替换成 a[i]，然后递归考察 a[i+1]和 b[j+1]。
+
+![](../images/leetcode-136.jpg)
+
+![](../images/leetcode-137.jpg)
+
+```JAVA
+如果：a[i]!=b[j]，那么：min_edist(i, j)就等于：
+min(min_edist(i-1,j)+1, min_edist(i,j-1)+1, min_edist(i-1,j-1)+1)
+
+如果：a[i]==b[j]，那么：min_edist(i, j)就等于：
+min(min_edist(i-1,j)+1, min_edist(i,j-1)+1，min_edist(i-1,j-1))
+
+其中，min表示求三数中的最小值。     
+```
+
+![](../images/leetcode-138.jpg)
+
+```JAVA
+public int lwstDP(char[] a, int n, char[] b, int m) {
+  int[][] minDist = new int[n][m];
+  for (int j = 0; j < m; ++j) { // 初始化第0行:a[0..0]与b[0..j]的编辑距离
+    if (a[0] == b[j]) minDist[0][j] = j;
+    else if (j != 0) minDist[0][j] = minDist[0][j-1]+1;
+    else minDist[0][j] = 1;
+  }
+  for (int i = 0; i < n; ++i) { // 初始化第0列:a[0..i]与b[0..0]的编辑距离
+    if (a[i] == b[0]) minDist[i][0] = i;
+    else if (i != 0) minDist[i][0] = minDist[i-1][0]+1;
+    else minDist[i][0] = 1;
+  }
+  for (int i = 1; i < n; ++i) { // 按行填表
+    for (int j = 1; j < m; ++j) {
+      if (a[i] == b[j]) minDist[i][j] = min(
+          minDist[i-1][j]+1, minDist[i][j-1]+1, minDist[i-1][j-1]);
+      else minDist[i][j] = min(
+          minDist[i-1][j]+1, minDist[i][j-1]+1, minDist[i-1][j-1]+1);
+    }
+  }
+  return minDist[n-1][m-1];
+}
+
+private int min(int x, int y, int z) {
+  int minv = Integer.MAX_VALUE;
+  if (x < minv) minv = x;
+  if (y < minv) minv = y;
+  if (z < minv) minv = z;
+  return minv;
+}
+```
+
+
+
+### 最长公共子串长度
+
+每个状态还是包括三个变量 (i, j, max_lcs)，max_lcs 表示 a[0…i]和 b[0…j]的最长公共子串长度。那 (i, j) 这个状态都是由哪些状态转移过来的呢
+
+我们先来看回溯的处理思路。我们从 a[0]和 b[0]开始，依次考察两个字符串中的字符是否匹配。
+
++ 如果 a[i]与 b[j]互相匹配，我们将最大公共子串长度加一，并且继续考察 a[i+1]和 b[j+1]。
++ 如果 a[i]与 b[j]不匹配，最长公共子串长度不变，这个时候，有两个不同的决策路线
++ 删除 a[i]，或者在 b[j]前面加上一个字符 a[i]，然后继续考察 a[i+1]和 b[j]
++ 删除 b[j]，或者在 a[i]前面加上一个字符 b[j]，然后继续考察 a[i]和 b[j+1]
+
+```JAVA
+如果：a[i]==b[j]，那么：max_lcs(i, j)就等于：
+max(max_lcs(i-1,j-1)+1, max_lcs(i-1, j), max_lcs(i, j-1))；
+
+如果：a[i]!=b[j]，那么：max_lcs(i, j)就等于：
+max(max_lcs(i-1,j-1), max_lcs(i-1, j), max_lcs(i, j-1))；
+
+其中max表示求三数中的最大值。
+```
+
+```JAVA
+public int lcs(char[] a, int n, char[] b, int m) {
+  int[][] maxlcs = new int[n][m];
+  for (int j = 0; j < m; ++j) {//初始化第0行：a[0..0]与b[0..j]的maxlcs
+    if (a[0] == b[j]) maxlcs[0][j] = 1;
+    else if (j != 0) maxlcs[0][j] = maxlcs[0][j-1];
+    else maxlcs[0][j] = 0;
+  }
+  for (int i = 0; i < n; ++i) {//初始化第0列：a[0..i]与b[0..0]的maxlcs
+    if (a[i] == b[0]) maxlcs[i][0] = 1;
+    else if (i != 0) maxlcs[i][0] = maxlcs[i-1][0];
+    else maxlcs[i][0] = 0;
+  }
+  for (int i = 1; i < n; ++i) { // 填表
+    for (int j = 1; j < m; ++j) {
+      if (a[i] == b[j]) maxlcs[i][j] = max(
+          maxlcs[i-1][j], maxlcs[i][j-1], maxlcs[i-1][j-1]+1);
+      else maxlcs[i][j] = max(
+          maxlcs[i-1][j], maxlcs[i][j-1], maxlcs[i-1][j-1]);
+    }
+  }
+  return maxlcs[n-1][m-1];
+}
+
+private int max(int x, int y, int z) {
+  int maxv = Integer.MIN_VALUE;
+  if (x > maxv) maxv = x;
+  if (y > maxv) maxv = y;
+  if (z > maxv) maxv = z;
+  return maxv;
+}
+```
+
 
 
 ### 动态规划vs贪心vs分治vs回溯
@@ -154,7 +273,7 @@ public void minDistBT(int i, int j, int dist, int[][] w, int n) {
 + **分治**：大部分也是最优解问题，但是，大部分都不能抽象成多阶段决策模型。
 + **回溯**：回溯算法相当于穷举搜索。穷举所有的情况，然后对比得到最优解。不过，回溯算法的时间复杂度是指数级别的，只能用来解决小规模数据的问题。对于大规模数据的问题，用回溯算法解决的执行效率就很低了
 + **贪心**：通过局部最优的选择，但是全局未必是最优解
-+ **动态规划**：需要满足三个特征，最优子结构、无后效性和重复子问题
++ **动态规划**：需要满足三个特征，**最优子结构、无后效性和重复子问题**
 
 
 
@@ -182,7 +301,9 @@ for 状态1 in 状态1的所有取值：
 ```
 
 
+
 ## 习题
+
 | 序号 | 题目                                                         | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
 | 62   | [不同路径](https://leetcode-cn.com/problems/unique-paths/)   | 1    |
