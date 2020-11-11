@@ -436,7 +436,7 @@ class Solution {
 
 **回溯**： 比较左右两边的多数元素，如果无法决定，则遍历当前子数组来计算元素个数
 
-```
+```JAVA
 class Solution {
     public int majorityElement(int[] nums) {
 
