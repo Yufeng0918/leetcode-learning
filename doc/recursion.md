@@ -283,13 +283,13 @@ private static int divide_conquer(Problem problem, ) {
 | 70   | 爬楼梯             | https://leetcode-cn.com/problems/climbing-stairs/            | 3    |
 | 22   | 括号生成           | https://leetcode-cn.com/problems/generate-parentheses/       | 3    |
 | 77   | 组合               | https://leetcode-cn.com/problems/combinations/               | 2    |
-| 46   | 全排列             | https://leetcode-cn.com/problems/permutations/               | 1    |
-| 47   | 全排列 II          | https://leetcode-cn.com/problems/permutations-ii/            | 1    |
-| 50   | Pow(x, n)          | https://leetcode-cn.com/problems/powx-n/                     | 1    |
-| 78   | 子集               | https://leetcode-cn.com/problems/subsets/                    | 1    |
+| 46   | 全排列             | https://leetcode-cn.com/problems/permutations/               | 2    |
+| 47   | 全排列 II          | https://leetcode-cn.com/problems/permutations-ii/            | 2    |
+| 50   | Pow(x, n)          | https://leetcode-cn.com/problems/powx-n/2                    | 2    |
+| 78   | 子集               | https://leetcode-cn.com/problems/subsets/                    | 2    |
 | 169  | 多数元素           | https://leetcode-cn.com/problems/majority-element/description/ | 1    |
 | 17   | 电话号码的字母组合 | https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/ | 3    |
-| 51   | N皇后              | https://leetcode-cn.com/problems/n-queens/                   | 1    |
+| 51   | N皇后              | https://leetcode-cn.com/problems/n-queens/                   | 2    |
 
 
 
@@ -370,4 +370,103 @@ class Solution {
     }
 }
 ```
+
+
+
+### Pow(x, n)
+
+**终止条件**：n 等于 0， 1， -1， 注意附属条件
+
+**分叉条件**：每次是n/2的乘积
+
+```JAVA
+class Solution {
+    public double myPow(double x, int n) {
+        
+        if (n == 0) return 1;
+        if (n == 1 || n == -1) return Math.pow(x, n);
+
+        double ans = myPow(x, (n >> 1));
+        if (n % 2 == 0) return ans * ans;
+        else return ans * ans * x;
+    }
+}
+```
+
+
+
+### 子集
+
+**终止条件**：遍历到的下标等于nums长度
+
+**分叉条件**：每次包括这个元素和不包括这个元素
+
+```JAVA
+class Solution {
+
+    List<List<Integer>> ans = new LinkedList<>();
+    public List<List<Integer>> subsets(int[] nums) {
+
+        if (nums.length == 0) return ans;
+        generate(nums, 0, new LinkedList<>());
+        return ans;
+    }
+
+    public void generate(int[] nums, int i, LinkedList prev) {
+        if (i == nums.length) {
+            ans.add(new LinkedList<>(prev));
+            return;
+        }
+
+        prev.addLast(nums[i]);
+        generate(nums, i + 1, prev);
+        prev.removeLast();
+        generate(nums, i + 1, prev);
+    }
+}
+```
+
+
+
+### 多数元素
+
+**终止条件**：当前只有一个元素
+
+**分叉条件**：左右对半分叉
+
+**回溯**： 比较左右两边的多数元素，如果无法决定，则遍历当前子数组来计算元素个数
+
+```
+class Solution {
+    public int majorityElement(int[] nums) {
+
+        return findMajor(nums, 0, nums.length - 1);
+    }
+
+    public int findMajor(int[] nums, int l, int r) {
+        if (l == r) return nums[l];
+
+        int mid = l + ((r - l) >> 2);
+        int lm = findMajor(nums, l, mid);
+        int rm = findMajor(nums, mid + 1, r);
+
+        if (lm == rm) return lm;
+
+        int lc = count(nums, l, r, lm);
+        int rc = count(nums, l, r, rm);
+
+        return lc > rc ? lm : rm;
+    }
+
+    public int count(int[] nums, int l, int r, int target) {
+        int count = 0;
+        for(int i = l; i <= r; i++) {
+            if (nums[i] == target) count++;
+        }
+        return count;
+    }
+}
+```
+
+
 
