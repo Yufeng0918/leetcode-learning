@@ -128,11 +128,202 @@ Trie 树最有优势的是查找前缀匹配的字符串，比如搜索引擎中
 
 | 序号 | 题目次数                                                     | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 94   | [实现 Trie (前缀树)](https://leetcode-cn.com/problems/implement-trie-prefix-tree/) | 1    |
+| 94   | [实现 Trie (前缀树)](https://leetcode-cn.com/problems/implement-trie-prefix-tree/) | 2    |
 | 212  | [单词搜索 II](https://leetcode-cn.com/problems/word-search-ii/) | 1    |
-|      |                                                              |      |
-|      |                                                              |      |
+| 677  | [键值映射](https://leetcode-cn.com/problems/map-sum-pairs/)  | 1    |
+| 648  | [单词替换](https://leetcode-cn.com/problems/replace-words/)  | 1    |
+
+### 实现Tire
+
++ 实现node里面的`containsKey(String), put(char), get(char)`  方法
++ 实现Tire里面的`insert(String), search(String)` 方法
+
+```JAVA
+class Trie {
+
+    /** Initialize your data structure here. */
+    Node root;
+    public Trie() {
+        this.root = new Node();
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        if (word == null || word.length() == 0) return;
+        
+        Node node = root;
+        for(char ch: word.toCharArray()) {
+            
+            if (!node.containsKey(ch)) {
+                node.put(ch, new Node());
+            }
+            node = node.get(ch);
+        }
+        node.setEnd(true);
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        
+        Node node = root;
+        for(char ch: word.toCharArray()) {
+            if (!node.containsKey(ch)) {
+                return false;
+            }
+            node = node.get(ch);
+        }
+        return node.isEnd();
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+
+        Node node = root;
+        for(char ch: prefix.toCharArray()) {
+            if (!node.containsKey(ch)) {
+                return false;
+            }
+            node = node.get(ch);
+        }
+        return true;
+    }
+}
+
+
+class Node {
+
+    Node[] child;
+    boolean isEnd;
+
+    public Node() {
+        child = new Node[26];
+        isEnd = false;
+    }
+
+    public boolean containsKey(char ch) {
+        return child[ch - 'a'] != null;
+    }
+
+    public Node get(char ch) {
+        return child[ch - 'a'];
+    }
+
+    public void put(char ch, Node node) {
+        child[ch - 'a'] = node;
+    }
+
+    public void setEnd(boolean isEnd) {
+        this.isEnd = isEnd;
+    }
+
+    public boolean isEnd() {
+        return this.isEnd;
+    }
+}
+```
 
 
 
-## 
+### 单词替换
+
++ 构建trie树
++ 利用trie树进行替换
+
+```JAVA
+class Solution {
+
+    Node root;
+
+    public String replaceWords(List<String> dictionary, String sentence) {
+        root = new Node();
+        for(String word: dictionary) {
+            insert(word);
+        }
+
+        String[] words = sentence.split(" ");
+        String[] ans = new String[words.length];
+        String root = "";
+        for(int i = 0; i < words.length; i++) {
+            ans[i] = search(words[i]);
+            if ("".equals(ans[i])) {
+                ans[i] = words[i];
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < ans.length; i++) {
+            sb.append(ans[i]);
+            if (i != ans.length - 1) sb.append(" ");
+        }
+        return sb.toString();
+    }
+
+
+    public void insert(String word) {
+        Node node = root;
+        for(char ch: word.toCharArray()) {
+            if (!node.containsKey(ch)) {
+                Node next = new Node();
+                node.put(ch, next);
+            }
+            node = node.get(ch);
+        }
+        node.setEnd(true);
+    }
+
+
+    public String search(String word) {
+        
+        StringBuilder sb = new StringBuilder();
+        Node node = root;
+        for(char ch: word.toCharArray()) {
+
+            if (node.isEnd()) return sb.toString();
+            
+            if (node.containsKey(ch)) {
+                sb.append(ch);    
+                node = node.get(ch);
+            } else {
+                return "";
+            }
+        }
+        return sb.toString();
+    }
+
+
+    class Node {
+
+        private boolean isEnd;
+
+        private Node[] child;
+
+        public Node() {
+            this.isEnd = false;
+            this.child = new Node[26];
+        }
+
+        public boolean containsKey(char ch) {
+            return child[ch - 'a'] != null;
+        }
+
+        public Node get(char ch) {
+            return this.child[ch - 'a'];
+        }
+
+        public void put(char ch, Node node) {
+            this.child[ch - 'a'] = node;
+        }
+
+        public void setEnd(boolean isEnd) {
+            this.isEnd = isEnd; 
+        }
+
+        public boolean isEnd() {
+            return this.isEnd;
+        }
+    }
+}
+```
+
+
+
