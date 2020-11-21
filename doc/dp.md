@@ -311,7 +311,7 @@ for 状态1 in 状态1的所有取值：
 | 1143 | [最长公共子序列](https://leetcode-cn.com/problems/longest-common-subsequence/) | 1    |
 | 70   | [爬楼梯](https://leetcode-cn.com/problems/climbing-stairs/)  | 1    |
 | 120  | [三角形最小路径和](https://leetcode-cn.com/problems/triangle/) | 1    |
-| 53   | [最大子序和](https://leetcode-cn.com/problems/maximum-subarray/) | 1    |
+| 53   | [最大子序和](https://leetcode-cn.com/problems/maximum-subarray/) | 2    |
 | 152  | [乘积最大子数组](https://leetcode-cn.com/problems/maximum-product-subarray/) | 1    |
 | 198  | [打家劫舍](https://leetcode-cn.com/problems/house-robber/)   | 1    |
 | 213  | [打家劫舍 II](https://leetcode-cn.com/problems/house-robber-ii/) | 1    |
@@ -320,7 +320,7 @@ for 状态1 in 状态1的所有取值：
 | 309  | [最佳买卖股票时机含冷冻期](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | 1    |
 | 123  | [买卖股票的最佳时机 III](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/) | 1    |
 | 188  | [买卖股票的最佳时机 IV](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/) | 1    |
-| 300  | [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | 1    |
+| 300  | [最长上升子序列](https://leetcode-cn.com/problems/longest-increasing-subsequence/) | 2    |
 | 32   | [最长有效括号](https://leetcode-cn.com/problems/longest-valid-parentheses/) | 1    |
 | 818  | [赛车](https://leetcode-cn.com/problems/race-car/)           | 1    |
 | 746  | [使用最小花费爬楼梯](https://leetcode-cn.com/problems/min-cost-climbing-stairs/) | 1    |
