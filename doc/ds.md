@@ -2,7 +2,7 @@
 
 | 序号 | 题目次数                                                     | 次数 |
 | ---- | ------------------------------------------------------------ | ---- |
-| 547  | [朋友圈](https://leetcode-cn.com/problems/friend-circles/)   | 1    |
+| 547  | [省份数量](https://leetcode-cn.com/problems/number-of-provinces/) | 1    |
 | 200  | [岛屿数量](https://leetcode-cn.com/problems/number-of-islands/) |      |
 | 130  | [被围绕的区域](https://leetcode-cn.com/problems/surrounded-regions/) |      |
 |      |                                                              |      |

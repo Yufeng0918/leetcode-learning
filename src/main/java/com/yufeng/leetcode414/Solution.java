@@ -53,7 +53,7 @@ public class Solution {
     public Integer findMaxLess(int[] nums, Integer target) {
 
         Integer ans = null;
-        for(int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {
 
             if (ans == null) {
                 if (target == null || (target != null && nums[i] < target)) {
@@ -76,6 +76,26 @@ public class Solution {
     public static void main(String[] args) {
 
         Solution s = new Solution();
-        System.out.println(s.thirdMax(new int[]{3, 2, 1}));
+//        System.out.println(s.thirdMax(new int[]{3, 2, 1}));
+
+
+        String str1 = "abeefec";
+        String str2 = "xyeefe";
+
+
+        char[] arr1 = str1.toCharArray();
+        char[] arr2 = str2.toCharArray();
+
+        int [][] dp = new int[arr2.length + 1][arr1.length + 1];
+        int ans = 0;
+        for(int i = 1; i < dp.length; i++) {
+            for(int j = 1; j < dp[i].length; j++) {
+                if (arr1[j - 1] == arr2[i - 1]) dp[i][j] = dp[i - 1][j - 1] + 1;
+                else dp[i][j] = 0;
+                ans = Math.max(ans, dp[i][j]);
+            }
+        }
+
+        System.out.println(ans);
     }
 }

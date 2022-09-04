@@ -291,6 +291,26 @@ private static int divide_conquer(Problem problem, ) {
 | 17   | 电话号码的字母组合 | https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/ | 3    |
 | 51   | N皇后              | https://leetcode-cn.com/problems/n-queens/                   | 2    |
 
+### Pow(x, n)
+
+**终止条件**：n 等于 0， 1， -1， 注意附属条件
+
+**分叉条件**：每次是n/2的乘积
+
+```JAVA
+class Solution {
+    public double myPow(double x, int n) {
+        
+        if (n == 0) return 1;
+        if (n == 1 || n == -1) return Math.pow(x, n);
+
+        double ans = myPow(x, (n >> 1));
+        if (n % 2 == 0) return ans * ans;
+        else return ans * ans * x;
+    }
+}
+```
+
 
 
 
@@ -372,26 +392,6 @@ class Solution {
 ```
 
 
-
-### Pow(x, n)
-
-**终止条件**：n 等于 0， 1， -1， 注意附属条件
-
-**分叉条件**：每次是n/2的乘积
-
-```JAVA
-class Solution {
-    public double myPow(double x, int n) {
-        
-        if (n == 0) return 1;
-        if (n == 1 || n == -1) return Math.pow(x, n);
-
-        double ans = myPow(x, (n >> 1));
-        if (n % 2 == 0) return ans * ans;
-        else return ans * ans * x;
-    }
-}
-```
 
 
 

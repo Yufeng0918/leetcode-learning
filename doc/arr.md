@@ -32,7 +32,7 @@
 
 标记删除元素，在一个固定时间，把标记删除的元素清空。
 
-
+盛最多水的容器
 
 
 ## 习题
@@ -49,7 +49,7 @@
 | 26   | [删除排序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/) | 4    |
 | 80   | [删除排序数组中的重复项 II](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/) | 3    |
 | 27   | [移除元素](https://leetcode-cn.com/problems/remove-element/) | 3    |
-| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/)3 | 2    |
+| 495  | [提莫攻击](https://leetcode-cn.com/problems/teemo-attacking/) | 3    |
 | 414  | [第三大的数](https://leetcode-cn.com/problems/third-maximum-number/) | 3    |
 
 
